@@ -29,3 +29,28 @@
   - Destroying an enemy target (possibly a big ship)
   - Escaping/Fighting into/in an asteroid field
   - Battle fleets fighting or A small crew defeating a tough enemy
+
+## Story:
+### Introduction
+- An anomaly has been reported to the commander
+- Commander sends a small squad of ships to investigate the anomaly
+- Ally ships warp near the location of anomaly
+- Anomaly is located near an asteroid field 
+- Ships investigate the area
+- An enemy fleet that is stationed there is discovered
+
+### Middle
+- Enemy sends fighter ships to attack allies
+- Some ally scouts escape and others stay to fight the squad of enemy ships and buy the escapng allies some time
+- (they need time to prepare warp)
+- A battle scene takes place, the ally ships are outnumbered and lose
+- The surviving scouts report to commander, who requests reinforcements from another planet
+- Reinforcements warp to space station
+- Enemy fleet grows and once all enemies have arrived they warp to the station
+- The enemies start attacking the planes stationed there. The situation is looking hopeless.
+- Ally reinforcements arrive shortly and the real battle begins
+
+### End
+- The allies eventually win and successfully defend the station
+- Ally ships get into formation outside the station
+
