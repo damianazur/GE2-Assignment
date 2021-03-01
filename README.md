@@ -1,8 +1,8 @@
 # GE2-Assignment: A Space Battle
 
-Name: Damian Wojtowicz
-Student Number: C17413722
-Course Code: DT228/4
+Name: Damian Wojtowicz<br>
+Student Number: C17413722<br>
+Course Code: DT228/4<br>
 
 ## Idea Generation:
 ### **Small Ship Models**
