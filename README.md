@@ -1,7 +1,10 @@
 # GE2-Assignment: A Space Battle
 
-## Idea Generation:
+Name: Damian Wojtowicz
+Student Number: C17413722
+Course Code: DT228/4
 
+## Idea Generation:
 ### **Small Ship Models**
   - Fighters, Bombers
   
@@ -55,7 +58,7 @@
 - Ally ships get into formation outside the station
 
 ### Storyboard
-
+Below are some of the images of the story
 ![Space Station](Images/SpaceStation.png?raw=true "Space Station (Beginning)")
 ![Scouts Warping](Images/ScoutWarp.png?raw=true "Scouts Warping")
 ![Asteroid Field Investigation](Images/Investigation.png?raw=true "Asteroid Field Investigation")
