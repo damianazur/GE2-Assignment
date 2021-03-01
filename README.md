@@ -54,6 +54,12 @@
 - The allies eventually win and successfully defend the station
 - Ally ships get into formation outside the station
 
+### Storyboard
+
+![Space Station](Images/SpaceStation.png?raw=true "Space Station (Beginning)")
+![Scouts Warping](Images/ScoutWarp.png?raw=true "Scouts Warping")
+![Asteroid Field Investigation](Images/Investigation.png?raw=true "Asteroid Field Investigation")
+![Reinforcements](Images/Reinforcements.png?raw=true "Reinforcements")
 
 ## Components/Behaviours That Need to be Implemented:
 - Fighter ship shoot (bullets with prediction)
