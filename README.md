@@ -56,13 +56,15 @@
 
 
 ## Components/Behaviours That Need to be Implemented:
-- Fighter ship shoot (bullets)
+- Fighter ship shoot (bullets with prediction)
 - Cruizer ship shoot (beam)
 - Warp
 - Investigation (Search) behaviour
 - Flee (When outnumbered)
 - Formations/Squads (Moving as formation, Units are added to or removed from formation)
 - Ship destruction
-- Evade missle
+- Fire homing missle
+- Evade missle (Barrel roll)
 - Defend objective (attack enemies that approach the objective)
+- Attack objective (destroy target)
 - Arrive (Ships gather at objective)
