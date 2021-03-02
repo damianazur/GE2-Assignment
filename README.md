@@ -1,7 +1,10 @@
 # GE2-Assignment: A Space Battle
 
-## Idea Generation:
+Name: Damian Wojtowicz<br>
+Student Number: C17413722<br>
+Course Code: DT228/4<br>
 
+## Idea Generation:
 ### **Small Ship Models**
   - Fighters, Bombers
   
@@ -54,6 +57,12 @@
 - The allies eventually win and successfully defend the station
 - Ally ships get into formation outside the station
 
+### Storyboard
+Below are some of the images of the story
+![Space Station](Images/SpaceStation.png?raw=true "Space Station (Beginning)")
+![Scouts Warping](Images/ScoutWarp.png?raw=true "Scouts Warping")
+![Asteroid Field Investigation](Images/Investigation.png?raw=true "Asteroid Field Investigation")
+![Reinforcements](Images/Reinforcements.png?raw=true "Reinforcements")
 
 ## Components/Behaviours That Need to be Implemented:
 - Fighter ship shoot (bullets with prediction)
