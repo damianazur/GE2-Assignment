@@ -36,11 +36,17 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Boid.cs" />
      <Compile Include="Assets\Scripts\Seek.cs" />
+     <Compile Include="Assets\Scripts\Boid.cs" />
      <Compile Include="Assets\Scripts\SteeringBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Path.cs" />
      <Compile Include="Assets\Scripts\FollowPath.cs" />
+     <Compile Include="Assets\Scripts\Path.cs" />
+     <Compile Include="Assets\Scripts\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\States.cs" />
+     <Compile Include="Assets\Scripts\Fighter.cs" />
+     <Compile Include="Assets\Scripts\OffsetPursue.cs" />
+     <Compile Include="Assets\Scripts\ObstacleAvoidance.cs" />
+     <Compile Include="Assets\Scripts\MainManager.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
