@@ -7,14 +7,19 @@ public class OffsetPursue : SteeringBehaviour
     public Boid leader;
     Vector3 targetPos;
     Vector3 worldTarget;
-    Vector3 offset;
+    public Vector3 offset;
+    public bool predefinedOffset = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        offset = transform.position - leader.transform.position;
-
-        offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+        if (predefinedOffset == false) {
+            offset = transform.position - leader.transform.position;
+            offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+        } else {
+            offset = offset - leader.transform.position;
+            offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+        }
     }
 
     // Update is called once per frame

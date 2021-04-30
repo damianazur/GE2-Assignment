@@ -13,7 +13,28 @@ class IdleState: State
 
     public override void Think()
     {
-        
+        if (owner.tag == "Untagged") {
+            GameObject[] squadLeaders = GameObject.FindGameObjectsWithTag("SquadLeader");
+            for (int i = 0; i < squadLeaders.Length; i++) {
+                GameObject squadLeader = squadLeaders[i];
+                float distToLeader = Vector3.Distance(owner.transform.position, squadLeader.transform.position);
+
+                if (distToLeader < 300.0f) {
+                    Transform squadObject = squadLeader.transform.parent;
+                    Squad squad = squadObject.GetComponent<Squad>();
+
+                    bool joined = squad.joinSquad(owner.gameObject);
+                    if (joined) {
+                        OffsetPursue offsetPursue = owner.GetComponent<OffsetPursue>();
+                        Vector3 offset = squad.getSquadPosition(owner.gameObject);
+                        offsetPursue.predefinedOffset = true;
+                        offsetPursue.leader = squadLeader.GetComponent<Boid>();
+                        offsetPursue.offset = offset;
+                        offsetPursue.enabled = true;
+                    }
+                }
+            }
+        }
     }
 
     public override void Exit()
@@ -97,9 +118,18 @@ class PrepareScoutDeployment : State
             if (faceDestComp.enabled == true) {
                 faceDestComp.enabled = false;
 
-            } else {
+            } else if (owner.tag != "SquadLeader") {
                 // Promote to leader
                 owner.tag = "SquadLeader";
+                GameObject squadObject = new GameObject();
+                squadObject.name = "Squad_1";
+                owner.transform.SetParent(squadObject.transform);
+
+                Squad squad = squadObject.AddComponent<Squad>();
+                squad.leader = owner.gameObject;
+                squad.maxMembers = 4;
+                squad.squadFormation = "triangle";
+                squad.enabled = true;
                 
             }
         }

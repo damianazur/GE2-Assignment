@@ -8,6 +8,7 @@ TagManager:
   - ScoutStopPoint
   - AsteroidFieldLocation
   - SquadLeader
+  - Follower
   layers:
   - Default
   - TransparentFX
