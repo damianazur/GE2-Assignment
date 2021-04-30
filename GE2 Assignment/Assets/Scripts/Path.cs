@@ -9,6 +9,8 @@ public class Path : MonoBehaviour {
     public int next = 0;
     public bool looped = true;
 
+    public bool preDefinedWaypoints = false;
+
     public void OnDrawGizmos()
     {
         int count = looped ? (transform.childCount + 1) : transform.childCount;
@@ -25,11 +27,13 @@ public class Path : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        waypoints.Clear();
-        int count = transform.childCount;
-        for (int i = 0; i < count; i++)
-        {
-            waypoints.Add(transform.GetChild(i).position);
+        if (!preDefinedWaypoints) {
+            waypoints.Clear();
+            int count = transform.childCount;
+            for (int i = 0; i < count; i++)
+            {
+                waypoints.Add(transform.GetChild(i).position);
+            }
         }
 	}
 	
