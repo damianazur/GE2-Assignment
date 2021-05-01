@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5148098193325671793}
   - component: {fileID: -5353891317773513803}
   - component: {fileID: 8289507630959929844}
+  - component: {fileID: -6710521384516203434}
   m_Layer: 0
   m_Name: LightFighter
   m_TagString: Untagged
@@ -119,12 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185d407cd25ed0f4582f6cfb99dcdefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 2
+  weight: 5
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
   scale: 4
-  forwardFeelerDepth: 10
-  sideFeelerDepth: 10
+  forwardFeelerDepth: 8
+  sideFeelerDepth: 8
   frontFeelerUpdatesPerSecond: 10
   sideFeelerUpdatesPerSecond: 5
   feelerRadius: 2
@@ -213,6 +214,19 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   slowingDistance: 15
   targetGameObject: {fileID: 0}
+--- !u!65 &-6710521384516203434
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261185230301207608}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7, y: 1.5, z: 5.5}
+  m_Center: {x: 0, y: 0.3, z: 1}
 --- !u!54 &3885833003345823527
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class FaceDestination : MonoBehaviour
         Vector3 firstPoint = sphere.transform.position;
 
         // Second last to the last is the direction of the destination
-        sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere = Instantiate(debugSpheres);
         sphere.transform.rotation = oppositeRotation;
         sphere.transform.position = transform.position + sphere.transform.forward * radius;
         sphere.name = "secondLast";
@@ -52,7 +52,7 @@ public class FaceDestination : MonoBehaviour
         // The other points on the circle are added
         for (int i = 1; i < numberOfCirclePoints * 2 - 1; i++) {
             // Create point
-            sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere = Instantiate(debugSpheres);
             sphere.transform.rotation = transform.rotation;
             sphere.transform.position = originPos;
             sphere.name = i.ToString();
