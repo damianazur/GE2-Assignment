@@ -13,16 +13,20 @@ class IdleState: State
 
     public override void Think()
     {
+        // If not in a squad
         if (owner.tag == "Untagged") {
+            // Select all squad leaders
             GameObject[] squadLeaders = GameObject.FindGameObjectsWithTag("SquadLeader");
             for (int i = 0; i < squadLeaders.Length; i++) {
                 GameObject squadLeader = squadLeaders[i];
                 float distToLeader = Vector3.Distance(owner.transform.position, squadLeader.transform.position);
 
+                // If squad leader within range check if there are troops needed
                 if (distToLeader < 300.0f) {
                     Transform squadObject = squadLeader.transform.parent;
                     Squad squad = squadObject.GetComponent<Squad>();
 
+                    // Join squad if there is space
                     bool joined = squad.joinSquad(owner.gameObject);
                     if (joined) {
                         OffsetPursue offsetPursue = owner.GetComponent<OffsetPursue>();
@@ -101,13 +105,13 @@ class PrepareScoutDeployment : State
         GameObject[] locations = GameObject.FindGameObjectsWithTag("AsteroidFieldLocation");
         GameObject location = locations[0];
 
-        // owner.GetComponent<FaceDestination>().destinationPos = location.transform.position;
-        // owner.GetComponent<FaceDestination>().enabled = true;
+        owner.GetComponent<FaceDestination>().destinationPos = location.transform.position;
+        owner.GetComponent<FaceDestination>().enabled = true;
 
         // ------------ DEBUG ------------
-        owner.GetComponent<Boid>().maxSpeed = 50;
-        owner.GetComponent<FaceDestination>().faceDestinationComplete = true;
-        owner.transform.LookAt(location.transform.position);
+        // owner.GetComponent<Boid>().maxSpeed = 50;
+        // owner.GetComponent<FaceDestination>().faceDestinationComplete = true;
+        // owner.transform.LookAt(location.transform.position);
         // ------------
     }
 
@@ -120,7 +124,6 @@ class PrepareScoutDeployment : State
 
             } else if (owner.tag != "SquadLeader") {
                 // Promote to leader
-                owner.tag = "SquadLeader";
                 GameObject squadObject = new GameObject();
                 squadObject.name = "Squad_1";
                 owner.transform.SetParent(squadObject.transform);
@@ -130,7 +133,9 @@ class PrepareScoutDeployment : State
                 squad.maxMembers = 4;
                 squad.squadFormation = "triangle";
                 squad.enabled = true;
-                
+
+            } else if (owner.tag == "SquadLeader") {
+                owner.ChangeState(new DeployToAsteroidField());
             }
         }
     }
@@ -142,11 +147,15 @@ class PrepareScoutDeployment : State
 }
 
 
-class GoToDestination : State
+class DeployToAsteroidField : State
 {
     public override void Enter()
     {
-
+        GameObject[] locations = GameObject.FindGameObjectsWithTag("AsteroidFieldLocation");
+        GameObject location = locations[0];
+        owner.GetComponent<Boid>().maxSpeed = 5;
+        owner.GetComponent<Seek>().targetGameObject = location;
+        owner.GetComponent<Seek>().enabled = true;
     }
 
     public override void Think()

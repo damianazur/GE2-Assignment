@@ -49,8 +49,6 @@
      <Compile Include="Assets\Scripts\MainManager.cs" />
      <Compile Include="Assets\Scripts\Arrive.cs" />
      <Compile Include="Assets\Scripts\FaceDestination.cs" />
-     <Compile Include="Assets\Scripts\WarpBehaviour.cs" />
-     <Compile Include="Assets\Scripts\PrepareWarpBehaviour.cs" />
      <Compile Include="Assets\Scripts\StateInitializer.cs" />
      <Compile Include="Assets\Scripts\Squad.cs" />
     <Reference Include="UnityEngine">

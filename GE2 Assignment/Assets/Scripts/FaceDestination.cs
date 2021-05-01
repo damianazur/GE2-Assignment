@@ -11,6 +11,8 @@ public class FaceDestination : MonoBehaviour
     public bool faceDestinationComplete;
     public float radius = 15.0f;
     private Dictionary <string, float> behaviourState = new Dictionary<string, float>();
+
+    public GameObject debugSpheres;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -33,7 +35,7 @@ public class FaceDestination : MonoBehaviour
         
         
         // First point is directly in front of the ship
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        GameObject sphere = Instantiate(debugSpheres);
         sphere.transform.position = transform.position + transform.forward * radius / 2;
         sphere.name = "first";
         Vector3 firstPoint = sphere.transform.position;

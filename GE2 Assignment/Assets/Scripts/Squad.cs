@@ -51,6 +51,8 @@ public class Squad : MonoBehaviour
 
                 squadPositions.Add(sphere.transform.position);
             }
+
+            leader.tag = "SquadLeader";
         }
     }
 

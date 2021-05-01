@@ -59,7 +59,7 @@ MonoBehaviour:
   mass: 1
   damping: 0.01
   banking: 0.1
-  maxSpeed: 20
+  maxSpeed: 10
   maxForce: 10
 --- !u!114 &7990569704144236271
 MonoBehaviour:
@@ -89,6 +89,7 @@ MonoBehaviour:
   destinationPos: {x: 0, y: 0, z: 0}
   faceDestinationComplete: 0
   radius: 15
+  debugSpheres: {fileID: 8030596048451941011, guid: 85f3ebbd9613e834bb8db0af28a31130, type: 3}
 --- !u!114 &-7319774054914994254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,17 +114,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261185230301207608}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 185d407cd25ed0f4582f6cfb99dcdefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1
+  weight: 2
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
   scale: 4
-  forwardFeelerDepth: 30
-  sideFeelerDepth: 15
+  forwardFeelerDepth: 10
+  sideFeelerDepth: 10
   frontFeelerUpdatesPerSecond: 10
   sideFeelerUpdatesPerSecond: 5
   feelerRadius: 2
@@ -164,6 +165,7 @@ MonoBehaviour:
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
   leader: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
   predefinedOffset: 0
 --- !u!114 &5148098193325671793
 MonoBehaviour:
@@ -211,6 +213,22 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   slowingDistance: 15
   targetGameObject: {fileID: 0}
+--- !u!54 &3885833003345823527
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261185230937937382}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1003104435115161829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -220,7 +238,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1041550589156982621, guid: 332fac65a32968f4d828dff5d6c8acd3, type: 3}
       propertyPath: m_Time
-      value: 0.3
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1041550589538479363, guid: 332fac65a32968f4d828dff5d6c8acd3, type: 3}
       propertyPath: m_Name
@@ -272,10 +290,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1041550590021154279, guid: 332fac65a32968f4d828dff5d6c8acd3, type: 3}
       propertyPath: m_Time
-      value: 0.3
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 332fac65a32968f4d828dff5d6c8acd3, type: 3}
+--- !u!1 &261185230937937382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1041550589538479363, guid: 332fac65a32968f4d828dff5d6c8acd3, type: 3}
+  m_PrefabInstance: {fileID: 1003104435115161829}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &261185230937937378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1041550589538479367, guid: 332fac65a32968f4d828dff5d6c8acd3, type: 3}
