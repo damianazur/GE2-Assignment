@@ -9,7 +9,6 @@ public class Squad : MonoBehaviour
     public int numSquadMembers = 0;
     public GameObject leader;
     private List<Vector3> squadPositions = new List<Vector3>();
-
     private List<int> followerIds = new List<int>();
 
     // Start is called before the first frame update
@@ -46,6 +45,8 @@ public class Squad : MonoBehaviour
 
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.name = "squad_pos_" + i.ToString();
+                sphere.transform.GetComponent<SphereCollider>().enabled = false;
+                sphere.transform.GetComponent<MeshRenderer>().enabled = false;
                 sphere.transform.position = leader.transform.position + leader.transform.forward * (appliedGap * -1);
                 sphere.transform.position = sphere.transform.position + leader.transform.right * (appliedGap * side);
 

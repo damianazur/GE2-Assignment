@@ -51,6 +51,9 @@
      <Compile Include="Assets\Scripts\FaceDestination.cs" />
      <Compile Include="Assets\Scripts\StateInitializer.cs" />
      <Compile Include="Assets\Scripts\Squad.cs" />
+     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
+     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
+     <Compile Include="Assets\Scripts\RotatingAsteroid.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -9,6 +9,7 @@ TagManager:
   - AsteroidFieldLocation
   - SquadLeader
   - Follower
+  - Scene1
   layers:
   - Default
   - TransparentFX

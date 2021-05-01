@@ -124,8 +124,8 @@ MonoBehaviour:
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
   scale: 4
-  forwardFeelerDepth: 8
-  sideFeelerDepth: 8
+  forwardFeelerDepth: 6
+  sideFeelerDepth: 6
   frontFeelerUpdatesPerSecond: 10
   sideFeelerUpdatesPerSecond: 5
   feelerRadius: 2

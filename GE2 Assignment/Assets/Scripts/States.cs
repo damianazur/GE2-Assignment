@@ -35,6 +35,7 @@ class IdleState: State
                         offsetPursue.leader = squadLeader.GetComponent<Boid>();
                         offsetPursue.offset = offset;
                         offsetPursue.enabled = true;
+                        owner.GetComponent<ObstacleAvoidance>().enabled = true;
                     }
                 }
             }
