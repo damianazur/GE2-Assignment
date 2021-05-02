@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 8289507630959929844}
   - component: {fileID: -6710521384516203434}
   - component: {fileID: 3951439796300001713}
+  - component: {fileID: 5944007852441663315}
   - component: {fileID: -6574996367703670041}
   m_Layer: 0
   m_Name: LightFighter
@@ -202,6 +203,8 @@ MonoBehaviour:
   enemy: {fileID: 0}
   enemyAffiliation: DarkUnit
   viewRange: 100
+  maxRetreatDistance: 150
+  retreatDistance: 0
 --- !u!114 &8289507630959929844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +252,28 @@ MonoBehaviour:
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
   target: {fileID: 0}
+--- !u!114 &5944007852441663315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261185230301207608}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d2c3dcab4016942b3352e037024940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  target: {fileID: 0}
+  turnSide: 0
+  turnSpeed: 0.1
+  desiredRotation: {x: 0, y: 0, z: 0, w: 0}
+  marginOfErrorDegrees: 20
+  initPos: {x: 0, y: 0, z: 0}
+  complete: 0
 --- !u!114 &-6574996367703670041
 MonoBehaviour:
   m_ObjectHideFlags: 0

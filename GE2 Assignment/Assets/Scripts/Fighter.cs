@@ -9,6 +9,8 @@ public class Fighter : MonoBehaviour
     public GameObject enemy;
     public string enemyAffiliation;
     public float viewRange = 100.0f;
+    public float maxRetreatDistance = 150.0f;
+    public float retreatDistance = 0;
 
     // Start is called before the first frame update
     void Start()

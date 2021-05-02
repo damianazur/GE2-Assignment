@@ -4798,6 +4798,9 @@ GameObject:
   - component: {fileID: -5743992674585514472}
   - component: {fileID: 7970168278527753446}
   - component: {fileID: 7863986302049849605}
+  - component: {fileID: 7483643375040090509}
+  - component: {fileID: 3695344897188586432}
+  - component: {fileID: 2123117243620157044}
   m_Layer: 0
   m_Name: DarkFighter
   m_TagString: Untagged
@@ -4895,6 +4898,8 @@ MonoBehaviour:
   enemy: {fileID: 0}
   enemyAffiliation: LightUnit
   viewRange: 100
+  maxRetreatDistance: 150
+  retreatDistance: 0
 --- !u!114 &4201375083558213364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4963,6 +4968,58 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7483643375040090509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d2c3dcab4016942b3352e037024940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  target: {fileID: 0}
+  turnSide: 0
+  turnSpeed: 0.1
+  desiredRotation: {x: 0, y: 0, z: 0, w: 0}
+  marginOfErrorDegrees: 20
+  initPos: {x: 0, y: 0, z: 0}
+  complete: 0
+--- !u!114 &3695344897188586432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25552adfda8d2cf49a7dd765f15b551d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  targetGameObject: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
+--- !u!65 &2123117243620157044
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.5104475, y: 1.9351351, z: 9.669604}
+  m_Center: {x: -0.029991787, y: 0.9829128, z: -0.052001465}
 --- !u!1 &3186854399779722372
 GameObject:
   m_ObjectHideFlags: 0

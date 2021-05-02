@@ -22,9 +22,9 @@ public class AttackState : State
 {
     public override void Enter()
     {
-        owner.GetComponent<Pursue>().target = owner.GetComponent<Fighter>().enemy.GetComponent<Boid>();
-        owner.GetComponent<Pursue>().enabled = true;
-        owner.GetComponent<Boid>().maxSpeed = 20.0f;
+        owner.GetComponent<Seek>().targetGameObject = owner.GetComponent<Fighter>().enemy;//.GetComponent<Boid>();
+        owner.GetComponent<Seek>().enabled = true;
+        owner.GetComponent<Boid>().maxSpeed = 15.0f;
     }
 
     public override void Think()
@@ -34,17 +34,28 @@ public class AttackState : State
         // {
         //     GameObject bullet = GameObject.Instantiate(owner.GetComponent<Fighter>().bullet, owner.transform.position + owner.transform.forward * 2, owner.transform.rotation);
         // }
-        if (Vector3.Distance(
-            owner.GetComponent<Fighter>().enemy.transform.position,
-            owner.transform.position) < 10)
-        {
+
+        float distToEnemy = Vector3.Distance(
+            owner.GetComponent<Fighter>().enemy.transform.position, 
+            owner.transform.position
+        );
+
+        if (distToEnemy < 20.0f) {
             owner.ChangeState(new FleeState());
+        } 
+        else if (distToEnemy < 50.0f)
+        {
+            owner.GetComponent<Seek>().enabled = false;
+            owner.GetComponent<Pursue>().target = owner.GetComponent<Fighter>().enemy.GetComponent<Boid>();
+            owner.GetComponent<Pursue>().enabled = true;
+
         }
 
     }
 
     public override void Exit()
     {
+        owner.GetComponent<Seek>().enabled = false;
         owner.GetComponent<Pursue>().enabled = false;
     }
 }
@@ -53,22 +64,52 @@ public class FleeState : State
 {
     public override void Enter()
     {
+        owner.GetComponent<Boid>().maxSpeed = 20.0f;
         owner.GetComponent<Flee>().targetGameObject = owner.GetComponent<Fighter>().enemy;
         owner.GetComponent<Flee>().enabled = true;
+
+        float retreatDistance = Random.Range(20.0f, owner.GetComponent<Fighter>().maxRetreatDistance);
+        owner.GetComponent<Fighter>().retreatDistance = retreatDistance;
     }
 
     public override void Think()
     {
-        if (Vector3.Distance(
-            owner.GetComponent<Fighter>().enemy.transform.position,
-            owner.transform.position) > 30)
+        float distToEnemy = Vector3.Distance(
+            owner.GetComponent<Fighter>().enemy.transform.position, 
+            owner.transform.position
+        );
+
+        if (distToEnemy > owner.GetComponent<Fighter>().retreatDistance)
         {
+            owner.GetComponent<Flee>().enabled = false;
+            owner.GetComponent<SmoothTurnaround>().enabled = true;
+        }
+
+        if (owner.GetComponent<SmoothTurnaround>().enabled == true && owner.GetComponent<SmoothTurnaround>().complete == true) {
+            owner.GetComponent<SmoothTurnaround>().enabled = false;
             owner.ChangeState(new AttackState());
         }
     }
     public override void Exit()
     {
         owner.GetComponent<Flee>().enabled = false;
+    }
+}
+
+public class TemporaryRetreatState : State
+{
+    public override void Enter()
+    {
+        // owner.GetComponent<TemporaryRetreat>().enabled = true;
+    }
+
+    public override void Think()
+    {
+        
+    }
+    public override void Exit()
+    {
+    
     }
 }
 
