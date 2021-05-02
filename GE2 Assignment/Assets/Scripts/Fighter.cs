@@ -39,6 +39,26 @@ public class Fighter : MonoBehaviour
         return false;
     }
 
+    public void OnTriggerEnter(Collider c)
+    {
+        if (c.tag == "Bullet")
+        {
+            string bulletAffiliation = c.gameObject.transform.Find("AffiliationTag").tag;
+            print(bulletAffiliation + " " + enemyAffiliation);
+            if (bulletAffiliation + "Unit" == enemyAffiliation) {
+                if (GetComponent<Fighter>().health > 0)
+                {            
+                    GetComponent<Fighter>().health --;
+                }
+                Destroy(c.gameObject);
+            }
+            // if (GetComponent<StateMachine>().currentState.GetType() != typeof(Dead))
+            // {
+            //     GetComponent<StateMachine>().ChangeState(new DefendState());    
+            // }
+        }
+    }
+
     public void fire() 
     {
         bulletDelayCount += 1;

@@ -4800,6 +4800,7 @@ GameObject:
   - component: {fileID: 7863986302049849605}
   - component: {fileID: 7483643375040090509}
   - component: {fileID: 3695344897188586432}
+  - component: {fileID: 2846382316508891423}
   - component: {fileID: 2123117243620157044}
   m_Layer: 0
   m_Name: DarkFighter
@@ -5008,6 +5009,20 @@ MonoBehaviour:
   boid: {fileID: 0}
   targetGameObject: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
+--- !u!114 &2846382316508891423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23613c604474354ea416496fc94a274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 10
+  radius: 5
 --- !u!65 &2123117243620157044
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5016,7 +5031,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3169429293118034678}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10.5104475, y: 1.9351351, z: 9.669604}
