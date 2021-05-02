@@ -4894,12 +4894,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  bullet: {fileID: 0}
+  bullet: {fileID: 8244556110061169602, guid: 8fa1ff722b12b4f4da0b6b2486a64974, type: 3}
   enemy: {fileID: 0}
   enemyAffiliation: LightUnit
   viewRange: 100
-  maxRetreatDistance: 150
+  maxRetreatDistance: 100
   retreatDistance: 0
+  bulletCooldown: 1
 --- !u!114 &4201375083558213364
 MonoBehaviour:
   m_ObjectHideFlags: 0

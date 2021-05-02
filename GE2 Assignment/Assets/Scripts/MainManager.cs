@@ -147,11 +147,11 @@ public class MainManager : MonoBehaviour
         }
 
         if (sequenceNumber == 9) {
-            Vector3 moveCamTo = initialScoutFighter.transform.position - initialScoutFighter.transform.forward * 30.0f;
-            moveCamTo = moveCamTo - initialScoutFighter.transform.right * 20.0f;
+            Vector3 moveCamTo = initialScoutFighter.transform.position - initialScoutFighter.transform.forward * 15.0f;
+            // moveCamTo = moveCamTo - initialScoutFighter.transform.right * 20.0f;
             moveCamTo.y += 20.0f;
             lerpCamTo(moveCamTo, 0.4f);
-            lerpLookAt(initialScoutFighter, 0.7f);
+            lerpLookAt(initialScoutFighter, 10.0f);
         }
     }
 }

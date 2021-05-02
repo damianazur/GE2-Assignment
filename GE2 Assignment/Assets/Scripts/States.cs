@@ -30,10 +30,10 @@ public class AttackState : State
     public override void Think()
     {
         Vector3 toEnemy = owner.GetComponent<Fighter>().enemy.transform.position - owner.transform.position; 
-        // if (Vector3.Angle(owner.transform.forward, toEnemy) < 45 && toEnemy.magnitude < 30)
-        // {
-        //     GameObject bullet = GameObject.Instantiate(owner.GetComponent<Fighter>().bullet, owner.transform.position + owner.transform.forward * 2, owner.transform.rotation);
-        // }
+        if (Vector3.Angle(owner.transform.forward, toEnemy) < 45 && toEnemy.magnitude < 100.0f)
+        {
+            owner.GetComponent<Fighter>().fire();
+        }
 
         float distToEnemy = Vector3.Distance(
             owner.GetComponent<Fighter>().enemy.transform.position, 
