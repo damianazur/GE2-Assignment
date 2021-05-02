@@ -7,7 +7,7 @@ public class Fighter : MonoBehaviour
     public float health = 10;
     public GameObject bullet;
     public GameObject enemy;
-    public GameObject enemyAffiliation;
+    public string enemyAffiliation;
     public float viewRange = 100.0f;
 
     // Start is called before the first frame update
@@ -17,12 +17,13 @@ public class Fighter : MonoBehaviour
     }
 
     public bool checkEnemyInSight() {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(fighterComp.enemyAffiliation);
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyAffiliation);
 
         for (int i = 0; i < enemies.Length; i++) {
             float distToEnemy = Vector3.Distance(transform.position, enemies[i].transform.position);
+            // print("Dist to enemy: " + enemyAffiliation + " " + distToEnemy);
             if (distToEnemy < viewRange) {
-                enemy = enemies[i].transform.parent;
+                enemy = enemies[i].transform.parent.gameObject;
                 return true;
             }
         }

@@ -4795,6 +4795,9 @@ GameObject:
   - component: {fileID: -6903912430131082796}
   - component: {fileID: 2740633300384418201}
   - component: {fileID: 4201375083558213364}
+  - component: {fileID: -5743992674585514472}
+  - component: {fileID: 7970168278527753446}
+  - component: {fileID: 7863986302049849605}
   m_Layer: 0
   m_Name: DarkFighter
   m_TagString: Untagged
@@ -4890,6 +4893,8 @@ MonoBehaviour:
   health: 10
   bullet: {fileID: 0}
   enemy: {fileID: 0}
+  enemyAffiliation: LightUnit
+  viewRange: 100
 --- !u!114 &4201375083558213364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4903,6 +4908,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updatesPerSecond: 5
+--- !u!114 &-5743992674585514472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fefd26e926b3fea43a9e91bc4a017366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  target: {fileID: 0}
+--- !u!114 &7970168278527753446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5df6d5bd3fe484691da34d0614bf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initalState: IdleState
+  initalGlobalState: 
+--- !u!114 &7863986302049849605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169429293118034678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185d407cd25ed0f4582f6cfb99dcdefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 5
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  scale: 4
+  forwardFeelerDepth: 6
+  sideFeelerDepth: 6
+  frontFeelerUpdatesPerSecond: 10
+  sideFeelerUpdatesPerSecond: 5
+  feelerRadius: 2
+  forceType: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &3186854399779722372
 GameObject:
   m_ObjectHideFlags: 0

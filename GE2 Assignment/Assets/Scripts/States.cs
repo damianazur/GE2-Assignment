@@ -11,7 +11,7 @@ public class Alive: State
         if (fighterComp.enemy == null) {
             
             if (fighterComp.checkEnemyInSight()) {
-                owner.ChangeState(new Attack());
+                owner.ChangeState(new AttackState());
                 return;
             }
         }
@@ -24,15 +24,16 @@ public class AttackState : State
     {
         owner.GetComponent<Pursue>().target = owner.GetComponent<Fighter>().enemy.GetComponent<Boid>();
         owner.GetComponent<Pursue>().enabled = true;
+        owner.GetComponent<Boid>().maxSpeed = 20.0f;
     }
 
     public override void Think()
     {
         Vector3 toEnemy = owner.GetComponent<Fighter>().enemy.transform.position - owner.transform.position; 
-        if (Vector3.Angle(owner.transform.forward, toEnemy) < 45 && toEnemy.magnitude < 30)
-        {
-            GameObject bullet = GameObject.Instantiate(owner.GetComponent<Fighter>().bullet, owner.transform.position + owner.transform.forward * 2, owner.transform.rotation);
-        }
+        // if (Vector3.Angle(owner.transform.forward, toEnemy) < 45 && toEnemy.magnitude < 30)
+        // {
+        //     GameObject bullet = GameObject.Instantiate(owner.GetComponent<Fighter>().bullet, owner.transform.position + owner.transform.forward * 2, owner.transform.rotation);
+        // }
         if (Vector3.Distance(
             owner.GetComponent<Fighter>().enemy.transform.position,
             owner.transform.position) < 10)
@@ -48,6 +49,29 @@ public class AttackState : State
     }
 }
 
+public class FleeState : State
+{
+    public override void Enter()
+    {
+        owner.GetComponent<Flee>().targetGameObject = owner.GetComponent<Fighter>().enemy;
+        owner.GetComponent<Flee>().enabled = true;
+    }
+
+    public override void Think()
+    {
+        if (Vector3.Distance(
+            owner.GetComponent<Fighter>().enemy.transform.position,
+            owner.transform.position) > 30)
+        {
+            owner.ChangeState(new AttackState());
+        }
+    }
+    public override void Exit()
+    {
+        owner.GetComponent<Flee>().enabled = false;
+    }
+}
+
 class IdleState: State
 {
     public override void Enter()
@@ -58,11 +82,20 @@ class IdleState: State
     public override void Think()
     {
         // If not in a squad
-        if (owner.transform.parent.tag != "Squad") {
+        if (owner.transform.parent == null) {
             // Select all squad leaders
             GameObject[] squadLeaders = GameObject.FindGameObjectsWithTag("SquadLeader");
             for (int i = 0; i < squadLeaders.Length; i++) {
                 GameObject squadLeader = squadLeaders[i];
+
+                // Check if squad leader belongs to the same affilitation (in other words, is not enemy squad leader)
+                string ownerAffiliation = owner.transform.Find("AffiliationTag").tag;
+                string leaderAffiliation = squadLeader.transform.Find("AffiliationTag").tag;
+                if (ownerAffiliation != leaderAffiliation) {
+                    continue;
+                }
+
+
                 float distToLeader = Vector3.Distance(owner.transform.position, squadLeader.transform.position);
 
                 // If squad leader within range check if there are troops needed
@@ -96,7 +129,7 @@ class FollowerState : State
 {
     public override void Enter()
     {
-        owner.GetComponent<FollowPath>().enabled = true;
+        owner.GetComponent<OffsetPursue>().enabled = true;
     }
     public override void Think()
     {
@@ -105,7 +138,7 @@ class FollowerState : State
 
     public override void Exit()
     {
-        owner.GetComponent<FollowPath>().enabled = false;
+        owner.GetComponent<OffsetPursue>().enabled = false;
     }
 }
 
@@ -227,6 +260,7 @@ class DeployToAsteroidField : State
 
     public override void Exit()
     {
+        Debug.Log("DeployToAsteroidField Exit");
         owner.GetComponent<Seek>().enabled = false;
     }
 }
