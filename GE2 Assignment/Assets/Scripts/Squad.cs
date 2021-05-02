@@ -67,7 +67,6 @@ public class Squad : MonoBehaviour
     public bool joinSquad(GameObject follower) {
         if (numSquadMembers < maxMembers) {
             numSquadMembers += 1;
-            follower.tag = "Follower";
             follower.transform.parent = transform;
             followerIds.Add(follower.GetInstanceID());
 
