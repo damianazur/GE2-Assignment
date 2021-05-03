@@ -5,25 +5,38 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public float power = 100.0f;
-    public float radius = 50.0F;
     // Start is called before the first frame update
     void Start()
     {
+        explode();
         Transform objects = transform.Find("Objects").transform;
+        objects.gameObject.active = true;
         foreach (Transform child in objects) {
-            child.parent = null;
             Rigidbody rb = child.GetComponent<Rigidbody>();
             if (rb == null) {
-                child.gameObject.AddComponent<Rigidbody>();
+                rb = child.gameObject.AddComponent<Rigidbody>();
             }
 
+            rb.useGravity = false;
+
+            BoxCollider boxc = child.gameObject.AddComponent<BoxCollider>();
+            boxc.size = new Vector3(1, 1, 1);
+            // Raycast layer so it does not interfere with obstacle avoidance
+            child.gameObject.layer = 2;
+
             if (rb != null) {
-                // Vector3 explosionPos = child.position;
-                // rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
-                // rb.velocity = Random.onUnitSphere * 100.0f;
-                rb.AddForce(child.forward * 100.0f, ForceMode.Impulse);
+                Vector3 explosionPos = child.position;
+                // Random direction
+                child.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                rb.AddForce(child.forward * power, ForceMode.Impulse);
             }
         }
+    }
+
+    void explode() {
+        ParticleSystem exp = transform.Find("Particle System").transform.GetComponent<ParticleSystem>();
+        exp.Play();
+        // Destroy(gameObject, exp.main.duration * 2);
     }
 
     // Update is called once per frame
