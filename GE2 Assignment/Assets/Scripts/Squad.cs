@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Exception = System.Exception;
 
 public class Squad : MonoBehaviour
 {
@@ -67,13 +68,17 @@ public class Squad : MonoBehaviour
 
     public Vector3 getSquadPosition(GameObject follower) {
         int index = squadMembers.IndexOf(follower);
-        // print("INDEX: " + index + " " + squadPositions[index]);
         return squadPositions[index];
     }
     public Vector3 getSquadOffset(GameObject follower) {
         int index = squadMembers.IndexOf(follower);
-        // print("INDEX: " + index + " " + squadPositions[index]);
-        return squadOffsets[index];
+        try {
+            Vector3 offset = squadOffsets[index];
+            return offset;
+
+        } catch (Exception e) {
+            return new Vector3(0, 0, 0);
+        }  
     }
 
     public bool joinSquad(GameObject follower) {
@@ -91,19 +96,11 @@ public class Squad : MonoBehaviour
     void Update()
     {
         if (squadMembers.Count > 0) {
-            // print("Members Count: " + squadMembers.Count);
             for (int i = squadMembers.Count - 1; i > -1; i--) {
                 GameObject member = squadMembers[i];
                 string memberState = member.transform.GetComponent<StateMachine>().currentState.GetType().Name;
                 
-                if (memberState != "FollowerState") {
-                    print("Members State: " + memberState);
-                }
-                if (memberState == "Dead") {
-                    print("####################");
-                }
                 if (memberState == "Dead" && member.transform.tag != "SquadLeader") {
-                    print("Members Removeth");
                     squadMembers.RemoveAt(i);
                     numSquadMembers -= 1;
                 }
@@ -116,6 +113,7 @@ public class Squad : MonoBehaviour
             if (leaderStatus == "Dead") {
                 foreach (Transform unit in transform) {
                     if (unit.GetComponent<StateMachine>().currentState.GetType().Name != "Dead") {
+                        squadMembers.Remove(unit.gameObject);
                         leader = unit.gameObject;
                         leader.tag = "SquadLeader";
                         break;

@@ -19,6 +19,8 @@ TagManager:
   - Mesh
   - Asteroid
   - Trail
+  - AsteroidFieldEntry
+  - Shrapnel
   layers:
   - Default
   - TransparentFX

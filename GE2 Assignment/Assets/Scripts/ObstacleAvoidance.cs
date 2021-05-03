@@ -82,7 +82,7 @@ public class ObstacleAvoidance : SteeringBehaviour
         bool collided = Physics.SphereCast(transform.position, feelerRadius, direction, out info, depth, mask.value);
 
         // Ignore bullets
-        if (collided && info.transform.tag == "Bullet") {
+        if (collided && (info.transform.tag == "Bullet" || info.transform.tag == "Shrapnel")) {
             return;
             // print(info.transform.tag);
         }

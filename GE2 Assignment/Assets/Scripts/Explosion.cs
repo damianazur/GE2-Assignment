@@ -39,6 +39,7 @@ public class Explosion : MonoBehaviour
 
             // Raycast layer so it does not interfere with obstacle avoidance
             child.gameObject.layer = 2;
+            child.tag = "Shrapnel";
 
             // Double check to ensure that the rigidbody is there (should be)
             if (rb != null) {
