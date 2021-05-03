@@ -11,6 +11,12 @@ TagManager:
   - Follower
   - Scene1
   - Squad
+  - LightUnit
+  - DarkUnit
+  - Bullet
+  - Light
+  - Dark
+  - Mesh
   layers:
   - Default
   - TransparentFX

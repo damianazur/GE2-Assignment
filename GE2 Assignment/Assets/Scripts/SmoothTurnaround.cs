@@ -42,8 +42,12 @@ public class SmoothTurnaround : SteeringBehaviour
     public void Update()
     {
         if (!complete) {
+            // Works by rotating a point around the ship to make it turn smoothly
             target.transform.RotateAround(initPos, Vector3.up, turnSpeed);
-
+            
+            // Check that current rotation is within the range
+            // The mod is used because an example  10 degrees and 360 degrees are seperated by
+            // 10 degrees instead of 350. (Loop around)
             float currYRot = transform.rotation.eulerAngles.y;
             float desYRot = desiredRotation.eulerAngles.y;
             float a = (currYRot - marginOfErrorDegrees) % 360;

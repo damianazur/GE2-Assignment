@@ -8,14 +8,37 @@ public class Alive: State
     public override void Think()
     {   
         Fighter fighterComp = owner.GetComponent<Fighter>();
+
+         if (fighterComp.health <= 0) {
+            Dead dead = new Dead();
+            owner.ChangeState(dead);
+            owner.SetGlobalState(dead);
+            return;
+        }
+        
         if (fighterComp.enemy == null) {
-            
             if (fighterComp.checkEnemyInSight()) {
                 owner.ChangeState(new AttackState());
                 return;
             }
         }
     }
+}
+public class Dead:State
+{
+    public override void Enter()
+    {
+        // Explode ship
+        owner.GetComponent<Explosion>().enabled = true;
+
+        // Disable all steering behaviours
+        SteeringBehaviour[] steeringBehaviours = owner.GetComponent<Boid>().GetComponents<SteeringBehaviour>();
+        foreach(SteeringBehaviour sb in steeringBehaviours)
+        {
+            sb.enabled = false;
+        }
+        owner.GetComponent<StateMachine>().enabled = false;  
+    }         
 }
 
 public class AttackState : State

@@ -84,7 +84,6 @@ public class Boid : MonoBehaviour
         // 3. Truncated
         // 4. Running sum
 
-
         foreach (SteeringBehaviour b in behaviours)
         {
             if (b.isActiveAndEnabled)

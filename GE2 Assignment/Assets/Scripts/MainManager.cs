@@ -30,8 +30,11 @@ public class MainManager : MonoBehaviour
                 DEBUG NOTE:
                 - Make sure to revert the initialScoutFighter to the original one.
             ----------------- */
-            GameObject scene1Object  = GameObject.FindGameObjectsWithTag("Scene1")[0];
-            scene1Object.active = false;
+            GameObject[] scene1Objects  = GameObject.FindGameObjectsWithTag("Scene1");
+            if (scene1Objects.Length > 0) {
+                scene1Objects[0].active = false;
+            }
+
             sequenceNumber = 4;
             Vector3 newCamPos = initialScoutFighter.transform.position + initialScoutFighter.transform.forward * 100.0f;;
             mainCamera.transform.position = newCamPos;
