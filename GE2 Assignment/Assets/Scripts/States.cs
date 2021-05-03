@@ -160,13 +160,7 @@ class IdleState: State
                     // Join squad if there is space
                     bool joined = squad.joinSquad(owner.gameObject);
                     if (joined) {
-                        OffsetPursue offsetPursue = owner.GetComponent<OffsetPursue>();
-                        Vector3 offset = squad.getSquadPosition(owner.gameObject);
-                        offsetPursue.predefinedOffset = true;
-                        offsetPursue.leader = squadLeader.GetComponent<Boid>();
-                        offsetPursue.offset = offset;
-                        offsetPursue.enabled = true;
-                        owner.GetComponent<ObstacleAvoidance>().enabled = true;
+                        owner.ChangeState(new FollowerState());
                     }
                 }
             }
@@ -183,11 +177,26 @@ class FollowerState : State
 {
     public override void Enter()
     {
+        OffsetPursue offsetPursue = owner.GetComponent<OffsetPursue>();
+        Squad squad = owner.transform.parent.transform.GetComponent<Squad>();
+        Vector3 offset = squad.getSquadOffset(owner.gameObject);
+
+        offsetPursue.predefinedOffset = true;
+        offsetPursue.leader = squad.leader.GetComponent<Boid>();
+        // offsetPursue.setOffset(offset);
+        offsetPursue.offset = offset;
+
+        owner.GetComponent<ObstacleAvoidance>().enabled = true;
         owner.GetComponent<OffsetPursue>().enabled = true;
     }
     public override void Think()
     {
-        
+        OffsetPursue offsetPursue = owner.GetComponent<OffsetPursue>();
+        Squad squad = owner.transform.parent.transform.GetComponent<Squad>();
+        Vector3 offset = squad.getSquadOffset(owner.gameObject);
+
+        offsetPursue.leader = squad.leader.GetComponent<Boid>();
+        offsetPursue.offset = offset;
     }
 
     public override void Exit()

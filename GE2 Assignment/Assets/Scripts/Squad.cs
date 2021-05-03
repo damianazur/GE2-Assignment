@@ -9,6 +9,7 @@ public class Squad : MonoBehaviour
     public int numSquadMembers = 0;
     public GameObject leader;
     private List<Vector3> squadPositions = new List<Vector3>();
+    private List<Vector3> squadOffsets = new List<Vector3>();
     public List<GameObject> squadMembers = new List<GameObject>();
     // public List<int> followerIds = new List<int>();
 
@@ -45,14 +46,19 @@ public class Squad : MonoBehaviour
                 // print(Mathf.Ceil((i + 1.0f) / 2.0f));
                 float appliedGap = gapDist + (Mathf.Ceil((i + 1.0f) / 2.0f) -1) * gapDist;
 
+                // Position
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.name = "squad_pos_" + i.ToString();
                 sphere.transform.GetComponent<SphereCollider>().enabled = false;
                 sphere.transform.GetComponent<MeshRenderer>().enabled = true;
                 sphere.transform.position = leader.transform.position + leader.transform.forward * (appliedGap * -1);
                 sphere.transform.position = sphere.transform.position + leader.transform.right * (appliedGap * side);
-
                 squadPositions.Add(sphere.transform.position);
+
+                // Offset
+                Vector3 offset = sphere.transform.position - leader.transform.position;
+                offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+                squadOffsets.Add(offset);
             }
 
             leader.tag = "SquadLeader";
@@ -61,8 +67,13 @@ public class Squad : MonoBehaviour
 
     public Vector3 getSquadPosition(GameObject follower) {
         int index = squadMembers.IndexOf(follower);
-        print("INDEX: " + index + " " + squadPositions[index]);
+        // print("INDEX: " + index + " " + squadPositions[index]);
         return squadPositions[index];
+    }
+    public Vector3 getSquadOffset(GameObject follower) {
+        int index = squadMembers.IndexOf(follower);
+        // print("INDEX: " + index + " " + squadPositions[index]);
+        return squadOffsets[index];
     }
 
     public bool joinSquad(GameObject follower) {
@@ -79,6 +90,15 @@ public class Squad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (squadMembers.Count > 0) {
+            for (int i = squadMembers.Count - 1; i > 0; i--) {
+                GameObject member = squadMembers[i];
+                if (member.transform.GetComponent<StateMachine>().currentState.GetType().Name == "Dead" && member.transform.tag != "SquadLeader") {
+                squadMembers.RemoveAt(i);
+                numSquadMembers -= 1;
+                }
+            }
+        }
 
         if (leader != null) {
             string leaderStatus = leader.GetComponent<StateMachine>().currentState.GetType().Name;

@@ -16,10 +16,12 @@ public class OffsetPursue : SteeringBehaviour
         if (predefinedOffset == false) {
             offset = transform.position - leader.transform.position;
             offset = Quaternion.Inverse(leader.transform.rotation) * offset;
-        } else {
-            offset = offset - leader.transform.position;
-            offset = Quaternion.Inverse(leader.transform.rotation) * offset;
         }
+    }
+
+    public void setOffsetWithPosition(Vector3 offsetTarget) {
+        Vector3 newOffset = offsetTarget - leader.transform.position;
+        offset = Quaternion.Inverse(leader.transform.rotation) * newOffset;
     }
 
     // Update is called once per frame
