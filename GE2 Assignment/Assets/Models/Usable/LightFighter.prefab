@@ -680,11 +680,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014915bbea6b58f4480c8bd675c40192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 20
   bullet: {fileID: 3325890248601568465, guid: 3f655c82100854c419f1def972fc0cf5, type: 3}
   enemy: {fileID: 0}
   enemyAffiliation: DarkUnit
-  viewRange: 100
+  viewRange: 200
   maxRetreatDistance: 100
   retreatDistance: 0
   bulletCooldown: 1

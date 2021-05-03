@@ -30,6 +30,8 @@ public class Dead:State
     {
         // Explode ship
         owner.GetComponent<Explosion>().enabled = true;
+        // Disable collider
+        owner.GetComponent<BoxCollider>().enabled = false;
 
         // Disable all steering behaviours
         SteeringBehaviour[] steeringBehaviours = owner.GetComponent<Boid>().GetComponents<SteeringBehaviour>();
@@ -88,6 +90,7 @@ public class AttackState : State
     }
 }
 
+// This state is set when the unit gets too close to the enemy
 public class TemporaryRetreatState : State
 {
     public override void Enter()
@@ -118,10 +121,13 @@ public class TemporaryRetreatState : State
                 owner.GetComponent<SmoothTurnaround>().enabled = false;
                 owner.ChangeState(new AttackState());
             }
+        } else {
+            owner.ChangeState(new IdleState());
         }
     }
     public override void Exit()
     {
+        owner.GetComponent<SmoothTurnaround>().enabled = false;
         owner.GetComponent<Flee>().enabled = false;
     }
 }
@@ -163,6 +169,13 @@ class IdleState: State
                         owner.ChangeState(new FollowerState());
                     }
                 }
+            }
+        }
+        else if (owner.transform.parent.transform.tag == "Squad") {
+            if (owner.transform.tag == "SquadLeader") {
+                owner.ChangeState(new ExitAsteroidField());
+            } else {
+                owner.ChangeState(new FollowerState());
             }
         }
     }
@@ -255,6 +268,75 @@ class DeliverMessage : State
 
     }
 }
+
+class ExitAsteroidField: State
+{
+    public override void Enter()
+    {
+        owner.GetComponent<Boid>().maxSpeed = 10.0f;
+        GameObject[] stopPoints = GameObject.FindGameObjectsWithTag("AsteroidFieldEntry");
+        GameObject stopPoint = stopPoints[0];
+
+        owner.GetComponent<Arrive>().targetGameObject = stopPoint;
+        owner.GetComponent<Arrive>().enabled = true;
+    }
+
+    public override void Think()
+    { 
+        GameObject seekTarget = owner.GetComponent<Arrive>().targetGameObject;
+        Vector3 targetPos = seekTarget.transform.position;
+        float dist = Vector3.Distance(owner.transform.position, targetPos);
+
+        if (dist < 5.0f) {
+            // Stop the Ship
+            Vector3 stopVelocity = new Vector3(0, 0, 0);
+            owner.GetComponent<Boid>().velocity = stopVelocity;
+            owner.GetComponent<Arrive>().enabled = false;
+
+            owner.ChangeState(new ReturnToStation());
+        }
+    }
+
+    public override void Exit()
+    {
+
+    }
+}
+
+class ReturnToStation: State
+{
+    public override void Enter()
+    {
+        GameObject[] stopPoints = GameObject.FindGameObjectsWithTag("ScoutStopPoint");
+        GameObject stopPoint = stopPoints[0];
+
+        owner.GetComponent<Arrive>().targetGameObject = stopPoint;
+        owner.GetComponent<Arrive>().enabled = true;
+    }
+
+    public override void Think()
+    { 
+        GameObject seekTarget = owner.GetComponent<Arrive>().targetGameObject;
+        Vector3 targetPos = seekTarget.transform.position;
+        float dist = Vector3.Distance(owner.transform.position, targetPos);
+
+        if (dist < 0.5f) {
+            // Stop the Ship
+            Vector3 stopVelocity = new Vector3(0, 0, 0);
+            owner.GetComponent<Boid>().velocity = stopVelocity;
+            owner.GetComponent<Arrive>().enabled = false;
+
+            // owner.ChangeState(new PrepareScoutDeployment());
+        }
+    }
+
+    public override void Exit()
+    {
+
+    }
+}
+
+
 
 class PrepareScoutDeployment : State
 {

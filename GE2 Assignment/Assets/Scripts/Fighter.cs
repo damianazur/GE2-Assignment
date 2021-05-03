@@ -49,7 +49,7 @@ public class Fighter : MonoBehaviour
         if (c.tag == "Bullet")
         {
             string bulletAffiliation = c.gameObject.transform.Find("AffiliationTag").tag;
-            print(bulletAffiliation + " " + enemyAffiliation);
+            // print(bulletAffiliation + " " + enemyAffiliation);
             if (bulletAffiliation + "Unit" == enemyAffiliation) {
                 if (health > 0)
                 {            

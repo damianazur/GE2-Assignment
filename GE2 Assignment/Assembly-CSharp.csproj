@@ -36,29 +36,30 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Seek.cs" />
-     <Compile Include="Assets\Scripts\Boid.cs" />
-     <Compile Include="Assets\Scripts\SteeringBehaviour.cs" />
-     <Compile Include="Assets\Scripts\FollowPath.cs" />
-     <Compile Include="Assets\Scripts\Path.cs" />
+     <Compile Include="Assets\Scripts\RotatingAsteroid.cs" />
      <Compile Include="Assets\Scripts\StateMachine.cs" />
-     <Compile Include="Assets\Scripts\States.cs" />
-     <Compile Include="Assets\Scripts\Fighter.cs" />
+     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
+     <Compile Include="Assets\Scripts\Seek.cs" />
+     <Compile Include="Assets\Scripts\StateInitializer.cs" />
+     <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\OffsetPursue.cs" />
+     <Compile Include="Assets\Scripts\States.cs" />
+     <Compile Include="Assets\Scripts\Pursue.cs" />
+     <Compile Include="Assets\Scripts\FaceDestination.cs" />
+     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
+     <Compile Include="Assets\Scripts\Boid.cs" />
+     <Compile Include="Assets\Scripts\Fighter.cs" />
+     <Compile Include="Assets\Scripts\Squad.cs" />
      <Compile Include="Assets\Scripts\ObstacleAvoidance.cs" />
+     <Compile Include="Assets\Scripts\SmoothTurnaround.cs" />
+     <Compile Include="Assets\Scripts\SteeringBehaviour.cs" />
      <Compile Include="Assets\Scripts\MainManager.cs" />
      <Compile Include="Assets\Scripts\Arrive.cs" />
-     <Compile Include="Assets\Scripts\FaceDestination.cs" />
-     <Compile Include="Assets\Scripts\StateInitializer.cs" />
-     <Compile Include="Assets\Scripts\Squad.cs" />
-     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
-     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
-     <Compile Include="Assets\Scripts\RotatingAsteroid.cs" />
-     <Compile Include="Assets\Scripts\Pursue.cs" />
+     <Compile Include="Assets\Scripts\FollowPath.cs" />
+     <Compile Include="Assets\Scripts\Path.cs" />
      <Compile Include="Assets\Scripts\Flee.cs" />
-     <Compile Include="Assets\Scripts\SmoothTurnaround.cs" />
-     <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\Asteroid.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

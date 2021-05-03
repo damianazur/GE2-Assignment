@@ -9765,11 +9765,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014915bbea6b58f4480c8bd675c40192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 6
+  health: 8
   bullet: {fileID: 8244556110061169602, guid: 8fa1ff722b12b4f4da0b6b2486a64974, type: 3}
   enemy: {fileID: 0}
   enemyAffiliation: LightUnit
-  viewRange: 100
+  viewRange: 200
   maxRetreatDistance: 100
   retreatDistance: 0
   bulletCooldown: 1
@@ -9858,7 +9858,7 @@ MonoBehaviour:
   boid: {fileID: 0}
   target: {fileID: 0}
   turnSide: 0
-  turnSpeed: 0.1
+  turnSpeed: 0.05
   desiredRotation: {x: 0, y: 0, z: 0, w: 0}
   marginOfErrorDegrees: 20
   initPos: {x: 0, y: 0, z: 0}

@@ -44,7 +44,6 @@ public class Squad : MonoBehaviour
                     side = 1;
                 }
                 
-                // print(Mathf.Ceil((i + 1.0f) / 2.0f));
                 float appliedGap = gapDist + (Mathf.Ceil((i + 1.0f) / 2.0f) -1) * gapDist;
 
                 // Position
@@ -95,6 +94,7 @@ public class Squad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update squad position if a member dies
         if (squadMembers.Count > 0) {
             for (int i = squadMembers.Count - 1; i > -1; i--) {
                 GameObject member = squadMembers[i];
@@ -107,6 +107,7 @@ public class Squad : MonoBehaviour
             }
         }
 
+        // Update leader if member dies
         if (leader != null) {
             string leaderStatus = leader.GetComponent<StateMachine>().currentState.GetType().Name;
             

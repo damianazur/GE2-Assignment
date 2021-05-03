@@ -70,12 +70,22 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject[] squadObj = GameObject.FindGameObjectsWithTag("Squad");
+        if (squadObj.Length > 0) {
+            Squad squad = squadObj[0].transform.GetComponent<Squad>();
+            GameObject squadLeader = squad.leader;
+            string leaderState = squadLeader.GetComponent<StateMachine>().currentState.GetType().Name;
+            if (leaderState == "ExitAsteroidField") {
+                sequenceNumber = 10;
+            }
+        }
+
         if (Time.fixedTime > 10.0f && sequenceNumber == 1) {
             setDynamicText("");
             sequenceNumber += 1;
         }
 
-        if (sequenceNumber == 2) {
+        else if (sequenceNumber == 2) {
             lerpLookAt(initialScoutFighter, 0.3f);
 
             string scoutState = initialScoutFighter.GetComponent<StateMachine>().currentState.GetType().Name;
@@ -84,7 +94,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (sequenceNumber == 3) {
+        else if (sequenceNumber == 3) {
             lerpLookAt(initialScoutFighter, 0.3f);
         
             Vector3 moveCamTo = new Vector3(7.137265f, 41.48331f, -52.30124f);
@@ -96,7 +106,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (sequenceNumber == 4) {
+        else if (sequenceNumber == 4) {
             Vector3 moveCamTo = initialScoutFighter.transform.position;
             float camMoveSpeed = 0.05f;
             float shipToStationDist = Vector3.Distance(initialScoutFighter.transform.position, station.transform.position);
@@ -118,7 +128,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (sequenceNumber == 5) {
+        else if (sequenceNumber == 5) {
             mainCamera.transform.LookAt(initialScoutFighter.transform);
             float xRot = mainCamera.transform.localRotation.eulerAngles.x;
             if (xRot < 275 && xRot > 165) {
@@ -127,12 +137,12 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (sequenceNumber == 6) {
+        else if (sequenceNumber == 6) {
             RenderSettings.skybox = scene2Skybox;
             sequenceNumber += 1;
         }
 
-        if (sequenceNumber == 7) {
+        else if (sequenceNumber == 7) {
             float camLookSpeed = 100f;
             lerpLookAt(initialScoutFighter, camLookSpeed);
             float shipToCamDist = Vector3.Distance(initialScoutFighter.transform.position, mainCamera.transform.position);
@@ -142,7 +152,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (sequenceNumber == 8) {
+        else if (sequenceNumber == 8) {
             sequenceStartTime += Time.deltaTime;
             Vector3 moveCamTo = initialScoutFighter.transform.position;
             moveCamTo.y += 5.0f;
@@ -154,7 +164,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (sequenceNumber == 9) {
+        else if (sequenceNumber == 9) {
             prevSequenceNum = 9;
             if (currentLookAt.transform.GetComponent<StateMachine>().currentState.GetType().Name == "Dead") {
                 
@@ -178,12 +188,20 @@ public class MainManager : MonoBehaviour
 
             Vector3 newCamLook = currentLookAt.transform.position;
             newCamLook += currentLookAt.transform.forward * 10.0f;
-
             lerpLookAt(newCamLook, 10.0f);
         }
 
+        else if (sequenceNumber == 10) {
+            Vector3 newCamPos = currentLookAt.transform.position + currentLookAt.transform.forward * 30.0f;
+            newCamPos.y += 10.0f;
+            mainCamera.transform.position = newCamPos;
+
+            Vector3 newCamLook = currentLookAt.transform.position;
+            newCamLook -= currentLookAt.transform.forward * 10.0f;
+            mainCamera.transform.LookAt(newCamLook);	
+        }
         
-        if (sequenceNumber == 1100) {
+        else if (sequenceNumber == 1100) {
             sequenceStartTime += Time.deltaTime;
             if (sequenceStartTime > 3.0f) {
                 sequenceNumber = prevSequenceNum;
