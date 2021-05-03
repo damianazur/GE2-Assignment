@@ -45,7 +45,7 @@ public class Fighter : MonoBehaviour
 
     public void OnTriggerEnter(Collider c)
     {
-        print(c.tag);
+        // print(c.tag);
         if (c.tag == "Bullet")
         {
             string bulletAffiliation = c.gameObject.transform.Find("AffiliationTag").tag;

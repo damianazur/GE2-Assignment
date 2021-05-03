@@ -91,11 +91,21 @@ public class Squad : MonoBehaviour
     void Update()
     {
         if (squadMembers.Count > 0) {
-            for (int i = squadMembers.Count - 1; i > 0; i--) {
+            // print("Members Count: " + squadMembers.Count);
+            for (int i = squadMembers.Count - 1; i > -1; i--) {
                 GameObject member = squadMembers[i];
-                if (member.transform.GetComponent<StateMachine>().currentState.GetType().Name == "Dead" && member.transform.tag != "SquadLeader") {
-                squadMembers.RemoveAt(i);
-                numSquadMembers -= 1;
+                string memberState = member.transform.GetComponent<StateMachine>().currentState.GetType().Name;
+                
+                if (memberState != "FollowerState") {
+                    print("Members State: " + memberState);
+                }
+                if (memberState == "Dead") {
+                    print("####################");
+                }
+                if (memberState == "Dead" && member.transform.tag != "SquadLeader") {
+                    print("Members Removeth");
+                    squadMembers.RemoveAt(i);
+                    numSquadMembers -= 1;
                 }
             }
         }
