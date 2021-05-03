@@ -10,18 +10,19 @@ public class MainManager : MonoBehaviour
     public float delayBetweenTextLetter = 0.3f;
     public string stationTitle = "Station A01";
     public int sequenceNumber = 0;
+    private int prevSequenceNum = 0;
     public GameObject initialScoutFighter;
     public GameObject station;
     public Material scene1Skybox;
     public Material scene2Skybox;
-
     private float sequenceStartTime = 0;
-
+    private GameObject currentLookAt;
     public int startOnScene = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        currentLookAt = initialScoutFighter;
         if (mainCamera && startOnScene == 1) {
             initialCamera();
 
@@ -55,6 +56,10 @@ public class MainManager : MonoBehaviour
 
     void lerpLookAt(GameObject target, float lookSpeed) {
         Quaternion lookOnLook = Quaternion.LookRotation(target.transform.position - mainCamera.transform.position);
+        mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, lookOnLook, Time.deltaTime * lookSpeed);
+    }
+    void lerpLookAt(Vector3 target, float lookSpeed) {
+        Quaternion lookOnLook = Quaternion.LookRotation(target - mainCamera.transform.position);
         mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, lookOnLook, Time.deltaTime * lookSpeed);
     }
 
@@ -150,11 +155,39 @@ public class MainManager : MonoBehaviour
         }
 
         if (sequenceNumber == 9) {
-            Vector3 moveCamTo = initialScoutFighter.transform.position - initialScoutFighter.transform.forward * 15.0f;
+            prevSequenceNum = 9;
+            if (currentLookAt.transform.GetComponent<StateMachine>().currentState.GetType().Name == "Dead") {
+                
+                GameObject lightUnitsSquad = GameObject.FindGameObjectsWithTag("Squad")[0];
+                foreach (Transform unit in lightUnitsSquad.transform) {
+                    if (unit.GetComponent<StateMachine>().currentState.GetType().Name != "Dead") {
+                        currentLookAt = unit.gameObject;
+                        break;
+                    }
+                }
+
+                sequenceNumber = 1100;
+                sequenceStartTime = 0;
+                return;
+            }
+
+            Vector3 moveCamTo = currentLookAt.transform.position - initialScoutFighter.transform.forward * 5.0f;
             // moveCamTo = moveCamTo - initialScoutFighter.transform.right * 20.0f;
-            moveCamTo.y += 20.0f;
+            moveCamTo.y += 10.0f;
             lerpCamTo(moveCamTo, 0.4f);
-            lerpLookAt(initialScoutFighter, 10.0f);
+
+            Vector3 newCamLook = currentLookAt.transform.position;
+            newCamLook += currentLookAt.transform.forward * 10.0f;
+
+            lerpLookAt(newCamLook, 10.0f);
+        }
+
+        
+        if (sequenceNumber == 1100) {
+            sequenceStartTime += Time.deltaTime;
+            if (sequenceStartTime > 3.0f) {
+                sequenceNumber = prevSequenceNum;
+            }
         }
     }
 }

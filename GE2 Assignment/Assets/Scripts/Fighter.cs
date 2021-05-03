@@ -25,14 +25,18 @@ public class Fighter : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++) {
             float distToEnemy = Vector3.Distance(transform.position, enemies[i].transform.position);
-            // print("Dist to enemy: " + enemyAffiliation + " " + distToEnemy);
-            if (distToEnemy < viewRange) {
-                // GameObject enemysTarget = enemies[i].transform.parent.transform.GetComponent<Fighter>().enemy;
+            // print(enemies[i].name);
+            StateMachine enemyStateMachine = enemies[i].transform.parent.GetComponent<StateMachine>();
+            
+            if (enemyStateMachine != null) {
+                // print(enemyStateMachine.currentState.GetType().Name);
+                string enemyState = enemyStateMachine.currentState.GetType().Name;
 
-                // if (enemysTarget == null || enemysTarget.transform != transform) {
+                // print("Dist to enemy: " + enemyAffiliation + " " + distToEnemy);
+                if (distToEnemy < viewRange && enemyState != "Dead") {
                     enemy = enemies[i].transform.parent.gameObject;
                     return true;
-                // }
+                }
             }
         }
 
@@ -41,14 +45,15 @@ public class Fighter : MonoBehaviour
 
     public void OnTriggerEnter(Collider c)
     {
+        print(c.tag);
         if (c.tag == "Bullet")
         {
             string bulletAffiliation = c.gameObject.transform.Find("AffiliationTag").tag;
             print(bulletAffiliation + " " + enemyAffiliation);
             if (bulletAffiliation + "Unit" == enemyAffiliation) {
-                if (GetComponent<Fighter>().health > 0)
+                if (health > 0)
                 {            
-                    GetComponent<Fighter>().health --;
+                    health --;
                 }
                 Destroy(c.gameObject);
             }
@@ -56,6 +61,9 @@ public class Fighter : MonoBehaviour
             // {
             //     GetComponent<StateMachine>().ChangeState(new DefendState());    
             // }
+        } 
+        else if (c.tag == "Asteroid") {
+            // health = 0;
         }
     }
 
@@ -71,6 +79,11 @@ public class Fighter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (enemy != null) {
+            string enemyState = enemy.transform.GetComponent<StateMachine>().currentState.GetType().Name;
+            if (enemyState == "Dead") {
+                enemy = null;
+            }
+        }
     }
 }

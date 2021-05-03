@@ -15,7 +15,7 @@ public class Alive: State
             owner.SetGlobalState(dead);
             return;
         }
-        
+
         if (fighterComp.enemy == null) {
             if (fighterComp.checkEnemyInSight()) {
                 owner.ChangeState(new AttackState());
@@ -52,6 +52,11 @@ public class AttackState : State
 
     public override void Think()
     {
+        if (owner.GetComponent<Fighter>().enemy == null) {
+            owner.ChangeState(new IdleState());
+            return;
+        }
+
         Vector3 toEnemy = owner.GetComponent<Fighter>().enemy.transform.position - owner.transform.position; 
         if (Vector3.Angle(owner.transform.forward, toEnemy) < 45 && toEnemy.magnitude < 100.0f)
         {
@@ -64,7 +69,7 @@ public class AttackState : State
         );
 
         if (distToEnemy < 20.0f) {
-            owner.ChangeState(new FleeState());
+            owner.ChangeState(new TemporaryRetreatState());
         } 
         else if (distToEnemy < 50.0f)
         {
@@ -83,11 +88,11 @@ public class AttackState : State
     }
 }
 
-public class FleeState : State
+public class TemporaryRetreatState : State
 {
     public override void Enter()
     {
-        owner.GetComponent<Boid>().maxSpeed = 20.0f;
+        owner.GetComponent<Boid>().maxSpeed = 15.0f;
         owner.GetComponent<Flee>().targetGameObject = owner.GetComponent<Fighter>().enemy;
         owner.GetComponent<Flee>().enabled = true;
 
@@ -97,42 +102,27 @@ public class FleeState : State
 
     public override void Think()
     {
-        float distToEnemy = Vector3.Distance(
-            owner.GetComponent<Fighter>().enemy.transform.position, 
-            owner.transform.position
-        );
+        if (owner.GetComponent<Fighter>().enemy) {
+            float distToEnemy = Vector3.Distance(
+                owner.GetComponent<Fighter>().enemy.transform.position, 
+                owner.transform.position
+            );
 
-        if (distToEnemy > owner.GetComponent<Fighter>().retreatDistance)
-        {
-            owner.GetComponent<Flee>().enabled = false;
-            owner.GetComponent<SmoothTurnaround>().enabled = true;
-        }
+            if (distToEnemy > owner.GetComponent<Fighter>().retreatDistance)
+            {
+                owner.GetComponent<Flee>().enabled = false;
+                owner.GetComponent<SmoothTurnaround>().enabled = true;
+            }
 
-        if (owner.GetComponent<SmoothTurnaround>().enabled == true && owner.GetComponent<SmoothTurnaround>().complete == true) {
-            owner.GetComponent<SmoothTurnaround>().enabled = false;
-            owner.ChangeState(new AttackState());
+            if (owner.GetComponent<SmoothTurnaround>().enabled == true && owner.GetComponent<SmoothTurnaround>().complete == true) {
+                owner.GetComponent<SmoothTurnaround>().enabled = false;
+                owner.ChangeState(new AttackState());
+            }
         }
     }
     public override void Exit()
     {
         owner.GetComponent<Flee>().enabled = false;
-    }
-}
-
-public class TemporaryRetreatState : State
-{
-    public override void Enter()
-    {
-        // owner.GetComponent<TemporaryRetreat>().enabled = true;
-    }
-
-    public override void Think()
-    {
-        
-    }
-    public override void Exit()
-    {
-    
     }
 }
 

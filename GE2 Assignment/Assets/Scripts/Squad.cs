@@ -9,7 +9,8 @@ public class Squad : MonoBehaviour
     public int numSquadMembers = 0;
     public GameObject leader;
     private List<Vector3> squadPositions = new List<Vector3>();
-    private List<int> followerIds = new List<int>();
+    public List<GameObject> squadMembers = new List<GameObject>();
+    // public List<int> followerIds = new List<int>();
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class Squad : MonoBehaviour
 
     }
 
+    // Positions only need to be generated once
     void generateSquadPositions() {
         print("Generating Squad Pos: " +  maxMembers);
         if (squadFormation == "triangle") {
@@ -40,13 +42,13 @@ public class Squad : MonoBehaviour
                     side = 1;
                 }
                 
-                print(Mathf.Ceil((i + 1.0f) / 2.0f));
+                // print(Mathf.Ceil((i + 1.0f) / 2.0f));
                 float appliedGap = gapDist + (Mathf.Ceil((i + 1.0f) / 2.0f) -1) * gapDist;
 
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.name = "squad_pos_" + i.ToString();
                 sphere.transform.GetComponent<SphereCollider>().enabled = false;
-                sphere.transform.GetComponent<MeshRenderer>().enabled = false;
+                sphere.transform.GetComponent<MeshRenderer>().enabled = true;
                 sphere.transform.position = leader.transform.position + leader.transform.forward * (appliedGap * -1);
                 sphere.transform.position = sphere.transform.position + leader.transform.right * (appliedGap * side);
 
@@ -58,9 +60,8 @@ public class Squad : MonoBehaviour
     }
 
     public Vector3 getSquadPosition(GameObject follower) {
-        int instanceID = follower.GetInstanceID();
-        int index = followerIds.IndexOf(instanceID);
-        print("INDEX: " + index);
+        int index = squadMembers.IndexOf(follower);
+        print("INDEX: " + index + " " + squadPositions[index]);
         return squadPositions[index];
     }
 
@@ -68,7 +69,7 @@ public class Squad : MonoBehaviour
         if (numSquadMembers < maxMembers) {
             numSquadMembers += 1;
             follower.transform.parent = transform;
-            followerIds.Add(follower.GetInstanceID());
+            squadMembers.Add(follower);
 
             return true;
         }
@@ -78,17 +79,20 @@ public class Squad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>();
-        // foreach (Transform child in allChildren)
-        // {
-        //     print(child.name);
-        // }
 
-        // int childCount =  gameObject.transform.childCount;
-        // if (numSquadMembers != childCount) {
-        //     print("No. in Squad: " + gameObject.transform.childCount);
-        //     numSquadMembers = childCount;
-        //     generateSquadPositions();
-        // }
+        if (leader != null) {
+            string leaderStatus = leader.GetComponent<StateMachine>().currentState.GetType().Name;
+            
+            if (leaderStatus == "Dead") {
+                foreach (Transform unit in transform) {
+                    if (unit.GetComponent<StateMachine>().currentState.GetType().Name != "Dead") {
+                        leader = unit.gameObject;
+                        leader.tag = "SquadLeader";
+                        break;
+                    }
+                }
+            }
+        }
+       
     }
 }

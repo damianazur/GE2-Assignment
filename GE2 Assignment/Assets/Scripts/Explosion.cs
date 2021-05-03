@@ -13,6 +13,9 @@ public class Explosion : MonoBehaviour
         {
             if (child.tag == "Mesh") {
                 child.GetComponent<MeshRenderer>().enabled = false;
+
+            } else if (child.tag == "Trail") {
+                child.GetComponent<TrailRenderer>().enabled = false;
             }
         }
 
@@ -40,7 +43,7 @@ public class Explosion : MonoBehaviour
             // Double check to ensure that the rigidbody is there (should be)
             if (rb != null) {
                 Vector3 explosionPos = child.position;
-                
+
                 // Force in random direction
                 child.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 rb.AddForce(child.forward * power, ForceMode.Impulse);

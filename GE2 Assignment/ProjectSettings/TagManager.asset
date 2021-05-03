@@ -17,6 +17,8 @@ TagManager:
   - Light
   - Dark
   - Mesh
+  - Asteroid
+  - Trail
   layers:
   - Default
   - TransparentFX

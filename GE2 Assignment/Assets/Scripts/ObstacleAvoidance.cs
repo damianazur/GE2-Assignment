@@ -80,6 +80,13 @@ public class ObstacleAvoidance : SteeringBehaviour
 
         RaycastHit info;
         bool collided = Physics.SphereCast(transform.position, feelerRadius, direction, out info, depth, mask.value);
+
+        // Ignore bullets
+        if (collided && info.transform.tag == "Bullet") {
+            return;
+            // print(info.transform.tag);
+        }
+
         Vector3 feelerEnd = collided ? info.point : (transform.position + direction * depth);
         feelers[feelerNum] = new FeelerInfo(feelerEnd, info.normal
             , collided, feelerType);
