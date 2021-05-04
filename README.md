@@ -14,7 +14,7 @@ This section of the report will discuss the final end-result of the project. For
 - The squad encounteres enemies and a battle follows.
 - The enemies are defeated and the squad exits the asteroid field
 
-Video of Project:
+Video of Project:<br>
 [![Scene Video](https://i.imgur.com/vfdmwen.png)](https://youtu.be/Z0EBRiennwo)
 
 ### States & Behaviours
@@ -69,6 +69,8 @@ Scripts taken from the Games Engines 2 module (Dr. Bryan Duggan's GE2-2020-2021 
 Arrive, Boid, Bullet, Flee, FollowPath, ObstacleAvoidance (added collision ignore), Path, Pursue, Seek, StateMachine, SteeringBehaviour, OffsetPursue (modified).<br>
 Although the code for the scripts taken from the module may not change much (if at all) the parameters were changed a lot of the time and their application is specific to the project.
 
+### Other
+Post processing bloom and emission on materials was used to make it glow.
 
 # Proposal
 ## Idea Generation:
