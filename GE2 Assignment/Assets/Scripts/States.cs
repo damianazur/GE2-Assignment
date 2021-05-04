@@ -289,8 +289,6 @@ class ExitAsteroidField: State
 
         if (dist < 5.0f) {
             // Stop the Ship
-            Vector3 stopVelocity = new Vector3(0, 0, 0);
-            owner.GetComponent<Boid>().velocity = stopVelocity;
             owner.GetComponent<Arrive>().enabled = false;
 
             owner.ChangeState(new ReturnToStation());
@@ -307,7 +305,7 @@ class ReturnToStation: State
 {
     public override void Enter()
     {
-        GameObject[] stopPoints = GameObject.FindGameObjectsWithTag("ScoutStopPoint");
+        GameObject[] stopPoints = GameObject.FindGameObjectsWithTag("EndingPoint");
         GameObject stopPoint = stopPoints[0];
 
         owner.GetComponent<Arrive>().targetGameObject = stopPoint;

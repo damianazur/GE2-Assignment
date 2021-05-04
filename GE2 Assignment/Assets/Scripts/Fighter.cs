@@ -14,10 +14,12 @@ public class Fighter : MonoBehaviour
     public int bulletCooldown = 10;
     private int bulletDelayCount = 0;
 
+    AudioSource shootAudio;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        shootAudio = transform.Find("ShootAudio").GetComponent<AudioSource>();
     }
 
     public bool checkEnemyInSight() {
@@ -69,6 +71,9 @@ public class Fighter : MonoBehaviour
 
     public void fire() 
     {
+        if (shootAudio != null) {
+            shootAudio.PlayOneShot(shootAudio.clip);
+        }
         bulletDelayCount += 1;
         if (bulletDelayCount >= bulletCooldown) {
             GameObject bulletInstance = GameObject.Instantiate(bullet, transform.position + transform.forward * 2, transform.rotation);

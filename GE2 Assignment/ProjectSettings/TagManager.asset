@@ -21,6 +21,8 @@ TagManager:
   - Trail
   - AsteroidFieldEntry
   - Shrapnel
+  - MusicPlayer
+  - EndingPoint
   layers:
   - Default
   - TransparentFX

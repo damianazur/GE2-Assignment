@@ -18,10 +18,16 @@ public class MainManager : MonoBehaviour
     private float sequenceStartTime = 0;
     private GameObject currentLookAt;
     public int startOnScene = 1;
+    public AudioClip beginningMusic;
+    public AudioClip battleMusic;
+    public AudioClip endingMusic;
+    private AudioSource musicPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
+        musicPlayer = GameObject.FindGameObjectsWithTag("MusicPlayer")[0].GetComponent<AudioSource>();
+
         currentLookAt = initialScoutFighter;
         if (mainCamera && startOnScene == 1) {
             initialCamera();
@@ -40,6 +46,9 @@ public class MainManager : MonoBehaviour
             Vector3 newCamPos = initialScoutFighter.transform.position + initialScoutFighter.transform.forward * 100.0f;;
             mainCamera.transform.position = newCamPos;
         }
+
+        musicPlayer.clip = beginningMusic;
+        musicPlayer.Play(0);
     }
 
     void setDynamicText(string text) {
@@ -77,6 +86,12 @@ public class MainManager : MonoBehaviour
             string leaderState = squadLeader.GetComponent<StateMachine>().currentState.GetType().Name;
             if (leaderState == "ExitAsteroidField") {
                 sequenceNumber = 10;
+
+            } else if (leaderState == "AttackState") {
+                if (musicPlayer.clip != battleMusic) {
+                    musicPlayer.clip = battleMusic;
+                    musicPlayer.Play(0);
+                }
             }
         }
 
@@ -192,6 +207,11 @@ public class MainManager : MonoBehaviour
         }
 
         else if (sequenceNumber == 10) {
+            if (musicPlayer.clip != endingMusic) {
+                musicPlayer.clip = endingMusic;
+                musicPlayer.Play(0);
+            }
+
             Vector3 newCamPos = currentLookAt.transform.position + currentLookAt.transform.forward * 30.0f;
             newCamPos.y += 10.0f;
             mainCamera.transform.position = newCamPos;

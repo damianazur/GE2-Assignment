@@ -50,7 +50,7 @@ public class Squad : MonoBehaviour
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.name = "squad_pos_" + i.ToString();
                 sphere.transform.GetComponent<SphereCollider>().enabled = false;
-                sphere.transform.GetComponent<MeshRenderer>().enabled = true;
+                sphere.transform.GetComponent<MeshRenderer>().enabled = false;
                 sphere.transform.position = leader.transform.position + leader.transform.forward * (appliedGap * -1);
                 sphere.transform.position = sphere.transform.position + leader.transform.right * (appliedGap * side);
                 squadPositions.Add(sphere.transform.position);

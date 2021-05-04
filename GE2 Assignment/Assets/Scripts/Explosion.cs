@@ -5,9 +5,11 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public float power = 100.0f;
+    AudioSource explosionAudio;
     // Start is called before the first frame update
     void Start()
     {
+        explosionAudio = transform.Find("Explosion").GetComponent<AudioSource>();
         // Disable the mesh of the ship if it has one
         foreach(Transform child in transform)
         {
@@ -55,6 +57,10 @@ public class Explosion : MonoBehaviour
     void explode() {
         ParticleSystem exp = transform.Find("Particle System").transform.GetComponent<ParticleSystem>();
         exp.Play();
+
+        if (explosionAudio != null) {
+            explosionAudio.PlayOneShot(explosionAudio.clip);
+        }
         // Destroy(gameObject, exp.main.duration * 2);
     }
 
