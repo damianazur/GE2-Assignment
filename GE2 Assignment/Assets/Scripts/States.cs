@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+// Global Alive state
 public class Alive: State
 {
     public override void Think()
@@ -24,6 +25,8 @@ public class Alive: State
         }
     }
 }
+
+// Global dead state
 public class Dead:State
 {
     public override void Enter()
@@ -48,7 +51,7 @@ public class AttackState : State
 {
     public override void Enter()
     {
-        owner.GetComponent<Seek>().targetGameObject = owner.GetComponent<Fighter>().enemy;//.GetComponent<Boid>();
+        owner.GetComponent<Seek>().targetGameObject = owner.GetComponent<Fighter>().enemy;
         owner.GetComponent<Seek>().enabled = true;
         owner.GetComponent<ObstacleAvoidance>().enabled = true;
         owner.GetComponent<ObstacleAvoidance>().weight = 5;
@@ -57,17 +60,21 @@ public class AttackState : State
 
     public override void Think()
     {
+        // If the fighter does not have an enemy change to idle state
         if (owner.GetComponent<Fighter>().enemy == null) {
             owner.ChangeState(new IdleState());
             return;
         }
 
         Vector3 toEnemy = owner.GetComponent<Fighter>().enemy.transform.position - owner.transform.position; 
+
+        // If the enemy is within a 45 degree FOV and within a certain range then shoot
         if (Vector3.Angle(owner.transform.forward, toEnemy) < 45 && toEnemy.magnitude < 100.0f)
         {
             owner.GetComponent<Fighter>().fire();
         }
 
+        // If the ship is too close then retreat temporarily 
         float distToEnemy = Vector3.Distance(
             owner.GetComponent<Fighter>().enemy.transform.position, 
             owner.transform.position
@@ -108,12 +115,14 @@ public class TemporaryRetreatState : State
 
     public override void Think()
     {
+        // If fighter has an enemy the retreat, otherwise go idle
         if (owner.GetComponent<Fighter>().enemy) {
             float distToEnemy = Vector3.Distance(
                 owner.GetComponent<Fighter>().enemy.transform.position, 
                 owner.transform.position
             );
 
+            // If retreated far enough smooth turnaround
             if (distToEnemy > owner.GetComponent<Fighter>().retreatDistance)
             {
                 owner.GetComponent<Flee>().enabled = false;
@@ -189,6 +198,7 @@ class IdleState: State
     }
 }
 
+// Follower of squad leader
 class FollowerState : State
 {
     public override void Enter()
@@ -199,7 +209,6 @@ class FollowerState : State
 
         offsetPursue.predefinedOffset = true;
         offsetPursue.leader = squad.leader.GetComponent<Boid>();
-        // offsetPursue.setOffset(offset);
         offsetPursue.offset = offset;
 
         owner.GetComponent<ObstacleAvoidance>().enabled = true;
@@ -207,6 +216,7 @@ class FollowerState : State
     }
     public override void Think()
     {
+        // Update the offset as it might change as members die.
         OffsetPursue offsetPursue = owner.GetComponent<OffsetPursue>();
         Squad squad = owner.transform.parent.transform.GetComponent<Squad>();
         Vector3 offset = squad.getSquadOffset(owner.gameObject);
@@ -291,19 +301,17 @@ class ExitAsteroidField: State
         float dist = Vector3.Distance(owner.transform.position, targetPos);
 
         if (dist < 5.0f) {
-            // Stop the Ship
-            owner.GetComponent<Arrive>().enabled = false;
-
             owner.ChangeState(new ReturnToStation());
         }
     }
 
     public override void Exit()
     {
-
+        owner.GetComponent<Arrive>().enabled = false;
     }
 }
 
+// This is the final state, the ship isn't really meant to reach the destination as it is very far away
 class ReturnToStation: State
 {
     public override void Enter()
@@ -322,18 +330,13 @@ class ReturnToStation: State
         float dist = Vector3.Distance(owner.transform.position, targetPos);
 
         if (dist < 0.5f) {
-            // Stop the Ship
-            Vector3 stopVelocity = new Vector3(0, 0, 0);
-            owner.GetComponent<Boid>().velocity = stopVelocity;
             owner.GetComponent<Arrive>().enabled = false;
-
-            // owner.ChangeState(new PrepareScoutDeployment());
         }
     }
 
     public override void Exit()
     {
-
+        owner.GetComponent<Arrive>().enabled = false;
     }
 }
 

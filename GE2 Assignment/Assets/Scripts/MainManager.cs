@@ -25,7 +25,10 @@ public class MainManager : MonoBehaviour
     private List<GameObject> scenes = new List<GameObject>();
 
     void Awake() {
+        // Get music player to play music (beginning, battle, end)
         musicPlayer = GameObject.FindGameObjectsWithTag("MusicPlayer")[0].GetComponent<AudioSource>();
+
+        // Get scenes so that they can be enabled/disabled as needed
         GameObject[] scene1Objects  = GameObject.FindGameObjectsWithTag("Scene1");
         if (scene1Objects.Length > 0) {
             scenes.Add(scene1Objects[0]);
@@ -41,6 +44,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // The camera will begin by looking at the scout heading for the station
         currentLookAt = initialScoutFighter;
         if (mainCamera && startOnScene == 1) {
             scenes[0].active = true;
@@ -68,7 +72,8 @@ public class MainManager : MonoBehaviour
         Text title = mainCanvas.transform.Find("Title").transform.GetComponent<Text>();
         title.text = text;
     }
-
+    
+    // Set camera for first scene (looking at the station)
     void initialCamera() {
         setDynamicText(stationTitle);
         mainCamera.transform.position = new Vector3(23.0f, 22.0f, 27.0f);
@@ -92,6 +97,8 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // This is the check for the last scene. If the enemies have been killed and the 
+        // ship is exiting the asteroid field then play the ending music
         GameObject[] squadObj = GameObject.FindGameObjectsWithTag("Squad");
         if (squadObj.Length > 0) {
             Squad squad = squadObj[0].transform.GetComponent<Squad>();
@@ -108,11 +115,13 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Clear the text after 10 seconds
         if (Time.fixedTime > 10.0f && sequenceNumber == 1) {
             setDynamicText("");
             sequenceNumber += 1;
         }
 
+        // Look at the incoming scout
         else if (sequenceNumber == 2) {
             lerpLookAt(initialScoutFighter, 0.3f);
 
@@ -122,6 +131,8 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Move the camera behind the stationed ships
+        // When the scout is deploying to asteroid field go to next sequence
         else if (sequenceNumber == 3) {
             lerpLookAt(initialScoutFighter, 0.3f);
         
@@ -134,6 +145,8 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Increase the camera speed when folling the ship as it is leaving the station 
+        // and heading for the asteroid field
         else if (sequenceNumber == 4) {
             Vector3 moveCamTo = initialScoutFighter.transform.position;
             float camMoveSpeed = 0.05f;
@@ -146,6 +159,8 @@ public class MainManager : MonoBehaviour
             lerpCamTo(moveCamTo, camMoveSpeed);
             lerpLookAt(initialScoutFighter, 0.4f);
 
+            // If the camera has almost reached the ship then change the camera position to be infront of the ship
+            // and change the sequence (this is the part right before the transition to the asteroid scene)
             float shipToCamDist = Vector3.Distance(initialScoutFighter.transform.position, mainCamera.transform.position);
             if (shipToCamDist < 40.0f) {
                 mainCamera.transform.LookAt(initialScoutFighter.transform);
@@ -156,6 +171,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Wait until the camera is looking directly upwards and change the scene to the asteroid scene
         else if (sequenceNumber == 5) {
             mainCamera.transform.LookAt(initialScoutFighter.transform);
             float xRot = mainCamera.transform.localRotation.eulerAngles.x;
@@ -169,11 +185,13 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Render the scene 2 skybox
         else if (sequenceNumber == 6) {
             RenderSettings.skybox = scene2Skybox;
             sequenceNumber += 1;
         }
 
+        // Keep looking at the ship but don't move until the ship is a certain distance away
         else if (sequenceNumber == 7) {
             float camLookSpeed = 100f;
             lerpLookAt(initialScoutFighter, camLookSpeed);
@@ -184,6 +202,8 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Move the camera right above the scout and maintain position for a number of seconds 
+        // before moving to next sequence
         else if (sequenceNumber == 8) {
             sequenceStartTime += Time.deltaTime;
             Vector3 moveCamTo = initialScoutFighter.transform.position;
@@ -196,8 +216,10 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        // Follow behind the ship and change to a different ship if that ship dies
         else if (sequenceNumber == 9) {
             prevSequenceNum = 9;
+            // if the current ship that was looked at died find a different ship in the squad
             if (currentLookAt.transform.GetComponent<StateMachine>().currentState.GetType().Name == "Dead") {
                 
                 GameObject lightUnitsSquad = GameObject.FindGameObjectsWithTag("Squad")[0];
@@ -212,9 +234,9 @@ public class MainManager : MonoBehaviour
                 sequenceStartTime = 0;
                 return;
             }
-
+            
+            // Camera looking in front of the ship and camera is above ship
             Vector3 moveCamTo = currentLookAt.transform.position - initialScoutFighter.transform.forward * 5.0f;
-            // moveCamTo = moveCamTo - initialScoutFighter.transform.right * 20.0f;
             moveCamTo.y += 10.0f;
             lerpCamTo(moveCamTo, 0.4f);
 
@@ -222,7 +244,8 @@ public class MainManager : MonoBehaviour
             newCamLook += currentLookAt.transform.forward * 10.0f;
             lerpLookAt(newCamLook, 10.0f);
         }
-
+        
+        // The battle has ended, play battle ending music and show the "THE END" text etc.
         else if (sequenceNumber == 10) {
             if (musicPlayer.clip != endingMusic) {
                 musicPlayer.clip = endingMusic;
@@ -245,6 +268,7 @@ public class MainManager : MonoBehaviour
             mainCamera.transform.LookAt(newCamLook);	
         }
         
+        // This sequence number is a code for a 3 second delay
         else if (sequenceNumber == 1100) {
             sequenceStartTime += Time.deltaTime;
             if (sequenceStartTime > 3.0f) {

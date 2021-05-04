@@ -15,8 +15,10 @@ public class SmoothTurnaround : SteeringBehaviour
     void OnEnable()
     {
         initPos = transform.position;
+        // The desired rotation is the current rotation * 180 degrees
         desiredRotation = transform.localRotation * Quaternion.Euler(0,180f,0);
 
+        // Create a sphere which the ship will follow
         target = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         target.transform.GetComponent<SphereCollider>().enabled = false;
         target.transform.GetComponent<MeshRenderer>().enabled = false;
