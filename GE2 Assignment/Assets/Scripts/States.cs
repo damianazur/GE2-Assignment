@@ -40,6 +40,7 @@ public class Dead:State
             sb.enabled = false;
         }
         owner.GetComponent<StateMachine>().enabled = false;  
+        owner.GetComponent<Boid>().enabled = false;
     }         
 }
 
@@ -49,6 +50,8 @@ public class AttackState : State
     {
         owner.GetComponent<Seek>().targetGameObject = owner.GetComponent<Fighter>().enemy;//.GetComponent<Boid>();
         owner.GetComponent<Seek>().enabled = true;
+        owner.GetComponent<ObstacleAvoidance>().enabled = true;
+        owner.GetComponent<ObstacleAvoidance>().weight = 5;
         owner.GetComponent<Boid>().maxSpeed = 15.0f;
     }
 
@@ -142,7 +145,7 @@ class IdleState: State
     public override void Think()
     {
         // If not in a squad
-        if (owner.transform.parent == null) {
+        if (owner.transform.parent == null || owner.transform.parent.transform.tag != "Squad") {
             // Select all squad leaders
             GameObject[] squadLeaders = GameObject.FindGameObjectsWithTag("SquadLeader");
             for (int i = 0; i < squadLeaders.Length; i++) {
@@ -364,6 +367,7 @@ class PrepareScoutDeployment : State
                 // Promote to leader
                 GameObject squadObject = new GameObject();
                 squadObject.name = "Squad_1";
+                squadObject.tag = "Squad";
                 owner.transform.SetParent(squadObject.transform);
 
                 Squad squad = squadObject.AddComponent<Squad>();
@@ -391,9 +395,11 @@ class DeployToAsteroidField : State
     {
         GameObject[] locations = GameObject.FindGameObjectsWithTag("AsteroidFieldLocation");
         GameObject location = locations[0];
-        owner.GetComponent<Boid>().maxSpeed = 5;
+        owner.GetComponent<Boid>().maxSpeed = 7;
         owner.GetComponent<Seek>().targetGameObject = location;
         owner.GetComponent<Seek>().enabled = true;
+        owner.GetComponent<ObstacleAvoidance>().weight = 5;
+        owner.GetComponent<ObstacleAvoidance>().enabled = true;
     }
 
     public override void Think()

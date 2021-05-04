@@ -23,6 +23,9 @@ TagManager:
   - Shrapnel
   - MusicPlayer
   - EndingPoint
+  - TheEndText
+  - Scene2
+  - Patrol
   layers:
   - Default
   - TransparentFX

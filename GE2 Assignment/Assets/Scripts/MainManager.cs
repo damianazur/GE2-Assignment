@@ -22,14 +22,28 @@ public class MainManager : MonoBehaviour
     public AudioClip battleMusic;
     public AudioClip endingMusic;
     private AudioSource musicPlayer;
+    private List<GameObject> scenes = new List<GameObject>();
+
+    void Awake() {
+        musicPlayer = GameObject.FindGameObjectsWithTag("MusicPlayer")[0].GetComponent<AudioSource>();
+        GameObject[] scene1Objects  = GameObject.FindGameObjectsWithTag("Scene1");
+        if (scene1Objects.Length > 0) {
+            scenes.Add(scene1Objects[0]);
+            scene1Objects[0].active = false;
+        }
+        GameObject[] scene2Objects  = GameObject.FindGameObjectsWithTag("Scene2");
+        if (scene2Objects.Length > 0) {
+           scenes.Add(scene2Objects[0]);
+           scene2Objects[0].active = false;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        musicPlayer = GameObject.FindGameObjectsWithTag("MusicPlayer")[0].GetComponent<AudioSource>();
-
         currentLookAt = initialScoutFighter;
         if (mainCamera && startOnScene == 1) {
+            scenes[0].active = true;
             initialCamera();
 
         } else if (startOnScene == 2) {
@@ -37,9 +51,8 @@ public class MainManager : MonoBehaviour
                 DEBUG NOTE:
                 - Make sure to revert the initialScoutFighter to the original one.
             ----------------- */
-            GameObject[] scene1Objects  = GameObject.FindGameObjectsWithTag("Scene1");
-            if (scene1Objects.Length > 0) {
-                scene1Objects[0].active = false;
+            if (scenes.Count > 0) {
+                scenes[0].active = false;
             }
 
             sequenceNumber = 4;
@@ -126,7 +139,7 @@ public class MainManager : MonoBehaviour
             float camMoveSpeed = 0.05f;
             float shipToStationDist = Vector3.Distance(initialScoutFighter.transform.position, station.transform.position);
             if (shipToStationDist > 130) {
-                camMoveSpeed = 0.2f;
+                camMoveSpeed = 0.4f;
             } else {
                 moveCamTo.y += 25.0f;
             }
@@ -136,7 +149,7 @@ public class MainManager : MonoBehaviour
             float shipToCamDist = Vector3.Distance(initialScoutFighter.transform.position, mainCamera.transform.position);
             if (shipToCamDist < 40.0f) {
                 mainCamera.transform.LookAt(initialScoutFighter.transform);
-                Vector3 newCamPos = initialScoutFighter.transform.position + initialScoutFighter.transform.forward * 40.0f;
+                Vector3 newCamPos = initialScoutFighter.transform.position + initialScoutFighter.transform.forward * 80.0f;
                 newCamPos.y -= 1.0f;
                 mainCamera.transform.position = newCamPos;
                 sequenceNumber += 1;
@@ -148,6 +161,10 @@ public class MainManager : MonoBehaviour
             float xRot = mainCamera.transform.localRotation.eulerAngles.x;
             if (xRot < 275 && xRot > 165) {
                 print("Loading New Scene");
+
+                scenes[0].active = false;
+                scenes[1].active = true;
+
                 sequenceNumber += 1;
             }
         }
@@ -210,6 +227,13 @@ public class MainManager : MonoBehaviour
             if (musicPlayer.clip != endingMusic) {
                 musicPlayer.clip = endingMusic;
                 musicPlayer.Play(0);
+            }
+            
+            string currentLookAtState = currentLookAt.GetComponent<StateMachine>().currentState.GetType().Name;
+            if (currentLookAtState == "ReturnToStation") {
+                GameObject theEndTextObj = GameObject.FindGameObjectsWithTag("TheEndText")[0];
+                Canvas theEndCanvas = theEndTextObj.transform.Find("Canvas").transform.GetComponent<Canvas>();
+                theEndCanvas.enabled = true;
             }
 
             Vector3 newCamPos = currentLookAt.transform.position + currentLookAt.transform.forward * 30.0f;
