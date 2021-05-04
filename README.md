@@ -4,6 +4,24 @@ Name: Damian Wojtowicz<br>
 Student Number: C17413722<br>
 Course Code: DT228/4<br>
 
+# Production
+This section of the report will discuss the final end-result of the project. For the idea generation and proposal see the next section.
+
+## Sequence of Events/Story Summary
+- A scout arrives at the station, an anomaly was discovered in an asteroid field.
+- The scout turns around to face the asteroid field and creates a squad.
+- Idle ships at the station join the squad and follow the scout (now leader of squad) into the asteroid field.
+- The squad encounteres enemies and a battle follows.
+- The enemies are defeated and the squad exits the asteroid field
+
+### States & Behaviours
+![States](Images/States.png?raw=true "States")
+![WrittenStates](Images/WrittenStates.png?raw=true "WrittenStates")
+
+
+
+
+# Proposal
 ## Idea Generation:
 ### **Small Ship Models**
   - Fighters, Bombers
@@ -77,3 +95,4 @@ Below are some of the images of the story
 - Defend objective (attack enemies that approach the objective)
 - Attack objective (destroy target)
 - Arrive (Ships gather at objective)
+
