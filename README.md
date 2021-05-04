@@ -7,7 +7,7 @@ Course Code: DT228/4<br>
 # Production
 This section of the report will discuss the final end-result of the project. For the idea generation and proposal see the next section (Proposal).
 
-## Sequence of Events/Story Summary (Spoilers)
+## Sequence of Events/Story Summary
 - A scout arrives at the station, a supposed anomaly was discovered in an asteroid field.
 - The scout turns around to face the asteroid field and creates a squad.
 - Idle ships at the station join the squad and follow the scout (now leader of squad) into the asteroid field.
@@ -17,7 +17,7 @@ This section of the report will discuss the final end-result of the project. For
 Video of Project:<br>
 [![Scene Video](https://i.imgur.com/vfdmwen.png)](https://youtu.be/Z0EBRiennwo)
 
-### States & Behaviours
+## States & Behaviours
 Below is a diagram of the states in this project. The sequence is as followes:
 1. First a fighter ship (scout) with the DeliverMessage state heads and arrives at the station.
 2. Scout states changes to PrepareScoutDeployment which involves turning around to face the asteroid field. This is achieved with a custom behaviour, FaceDestination. This behaviour was designed to make the ship turn around naturally without changing the original position. The behaviour was also designed to be dynamic so that the starting orientation of the ship and the location they want to face can be changed.
@@ -36,7 +36,7 @@ More Indepth View of States:
 ![WrittenStates](https://i.imgur.com/m89D5e1.png)
 
 
-### Scripts & Behaviours
+## Scripts & Behaviours
 Explanation of FaceDestination and Squad behaviours:
 https://youtu.be/dvBfNuWoA2E
 
