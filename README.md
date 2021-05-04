@@ -15,8 +15,20 @@ This section of the report will discuss the final end-result of the project. For
 - The enemies are defeated and the squad exits the asteroid field
 
 ### States & Behaviours
+Below is a diagram of the states in this project. The sequence is as followes:
+1. First a fighter ship (scout) with the DeliverMessage state arrives at the station
+2. Scout goes into prepare deployment state which involves turning around to face the asteroid field. This is achieved with the custom behaviour, FaceDestination. This behaviour was designed to make the ship turn around naturally without changing the original position. The behaviour was also designed to be dynamic so that the starting orientation of the ship and the location they want to face can be changed.
+4. Once the ship faces the correct location they create a squad. A squad allows for a number of ships to fly together in formation. The squad is also dynamic, meaning that if the leader dies a new leader is automatically allocated from within the squad and if a member dies the other ships rearrange to maintain the formation.
+5. When the scout becomes a squad leader the other ships that are idle within the vicinity will join the squad until the squad maxiumum predefined capacity is reached. These ships go from the IdleState to the FollowerState.
+6. The leader changes to the DeployToAsteroidField state and moves towards the asteroid field. 
+7. Looking at the diagram below you may notice that there is no further state after DeployToAsteroidField. This is because within the asteroid field are enemies and the global Alive state changes the the Attack state when the fighter has a target selected. Once all the enemies die the attack State changes to the IdleState. From the IdleState since there are no more enemies the leader changes to ExitAsteroidField and then to ReturnToStation. In other words the DeployToAsteroidField state is only needed to reach the enemies.
+8. When the squad encounters enemies the squad breaks up momentarily, once the fighter is over the followers return to the FollowerState via the IdleState.
+9. The patrol state does not change to anything because the ships in the beginning scene will move around the station endlessly.
+10. When the fighter ship gets too close to the enemy ship the TemporaryRetreatState is activated. It involves the Flee behaviour. Once the ship is far enough the SmoothTurnaround behaviour is activated. This is so that the ship does not turn 180 degrees in an instant to face the enemy again but instead turns in a more natural manner.
+
+
 ![States](Images/States.png?raw=true "States")
-![WrittenStates](Images/WrittenStates.png?raw=true "WrittenStates")
+![WrittenStates](https://i.imgur.com/m89D5e1.png)
 
 
 
