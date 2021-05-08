@@ -71,6 +71,7 @@ Although the code for the scripts taken from the module may not change much (if 
 
 ### Other
 Post processing bloom and emission on materials was used to make it glow.
+I also do not own any of the models which includes the skyboxes, asteroids, fighter ships, and the station.
 
 # Proposal
 ## Idea Generation:
