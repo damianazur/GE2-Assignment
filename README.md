@@ -60,7 +60,7 @@ This script simply removes the bullet that collides with it.<br>
 This script generates a random rotation for the asteroid and rotates it. Adds more life to the asteroid field.
 
 8. Explosion<br>
-Invoked by the Dead state when the fighter dies. The explodable parts of the ship are given a random direction and a set velocity. If the fighter has a mesh then explodable parts are substituted and the mesh is hidden. Explosion sound is played. To create the particle effect a tutorial by Masanori Takano (https://styly.cc/tips/explosion01/). The process followed is the same, however the parameters such as time, size, colour etc. were tweaked to suit my liking. The code for the explosion was written by me.<br>
+Invoked by the Dead state when the fighter dies. The explodable parts of the ship are given a random direction and a set velocity. If the fighter has a mesh then explodable parts are substituted and the mesh is hidden. Explosion sound is played. To create the particle effect a tutorial by Masanori Takano (https://styly.cc/tips/explosion01/). In involved the use of particple. The process followed is the same, however the parameters such as time, size, colour etc. were tweaked to suit my liking. The code for the explosion was written by me.<br>
 
 9. State Initiallizer<br>
 This script allows for the global and non-global state to be provided as a string and that state will be set as the initial state of the ship. 
@@ -70,8 +70,14 @@ Arrive, Boid, Bullet, Flee, FollowPath, ObstacleAvoidance (added collision ignor
 Although the code for the scripts taken from the module may not change much (if at all) the parameters were changed a lot of the time and their application is specific to the project.
 
 ### Other
-Post processing bloom and emission on materials was used to make it glow.
-I also do not own any of the models which includes the skyboxes, asteroids, fighter ships, and the station.
+Post processing bloom and emission on materials was used to make it glow.<br>
+I do not own any of the models which includes the skyboxes, asteroids, fighter ships, and the station. I just recoloured the models to suit the project.<br>
+Particle effects abd trail renderers were used.
+
+#### Some of the Assets Links:
+Space Station: https://www.cgtrader.com/items/2840923/download-page<br>
+Light Fighter: https://www.cgtrader.com/items/227022/download-page<br>
+
 
 # Proposal
 ## Idea Generation:
