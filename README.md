@@ -72,7 +72,7 @@ Although the code for the scripts taken from the module may not change much (if 
 ### Other
 Post processing bloom and emission on materials was used to make it glow.<br>
 I do not own any of the models which includes the skyboxes, asteroids, fighter ships, and the station. I just recoloured the models to suit the project.<br>
-Particle effects abd trail renderers were used.
+Particle effects and trail renderers were used.
 
 #### Some of the Assets Links:
 Space Station: https://www.cgtrader.com/items/2840923/download-page<br>
